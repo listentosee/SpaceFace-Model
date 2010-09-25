@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	width="830" height="380"
+	creationComplete="onCreationComplete()"
+	removedFromStage="{ enableCPULoad = false; intervalTimer.stop() }"
+	implements="uk.co.dubit.platform.components.minigame.client.multiplayer.IMultiplayerMinigameClient, uk.co.dubit.platform.components.minigame.client.multiplayer.IMultiplayerGameListener, uk.co.dubit.platform.components.minigame.client.IMinigameClient"
+	xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	
+	<mx:VBox width="100%" height="100%">
+		<mx:TextArea id="output" width="100%" height="100%" editable="false" text="Minigame ready" wordWrap="false" />
+		
+		<mx:VBox width="100%">
+			<mx:HBox width="100%" verticalAlign="middle" toolTip="Retrieves data currently on the Minigame GAML node">
+				<mx:Label text="Minigame Data:" />
+				<mx:TextInput id="minigameDataKey" width="100%"/>
+				<mx:Button label="Print keys" 
+					click="{
+						appendOutput('Available minigame data keys:');
+						for each(var key:String in minigameBridge.getNodeDataKeys()) { appendOutput(' ' + key) };
+					}" />
+				
+				<mx:Button label="Get minigame data" 
+					click="{ 
+						appendOutput(minigameBridge.getNodeData(minigameDataKey.text)); 
+						minigameDataKey.text = '';
+					}" />
+			</mx:HBox>
+			
+			<mx:HBox width="100%" verticalAlign="middle" toolTip="Dispatches a custom event through the GAML minigame node">
+				<mx:Label text="Custom GAML event:" />
+				<mx:TextInput id="eventName" width="100%"/>
+				<mx:TextInput id="data" width="100%"/>
+				<mx:Button label="Dispatch Event" 
+					click="{
+						minigameBridge.dispatchGAMLEvent(eventName.text, { 'data': data.text });
+						eventName.text = '';
+						data.text = '';
+						appendOutput('Dispatched custom GAML event');
+					}" />
+			</mx:HBox>
+			<mx:HBox width="100%" verticalAlign="middle" toolTip="Executed a GAML query">
+				<mx:Label text="Custom GAML query:" />
+				<mx:TextInput id="GAMLQuery" width="100%"/>
+				<mx:Button label="Execute query" 
+					click="{
+						appendOutput('Executing query...');
+						appendOutput(minigameBridge.executeGAMLQuery(GAMLQuery.text));
+						GAMLQuery.text = '';
+					}" />
+			</mx:HBox>
+		</mx:VBox>
+		
+		<mx:VBox id="multiplayerMinigameControls" width="100%">
+			<mx:HBox width="100%">
+				<mx:Label text="Generic message:" />
+				<mx:TextInput id="msgType" width="100%" toolTip="Message type"/>
+				<mx:TextInput id="msg" width="100%" toolTip="Message" />
+				<mx:Button label="Send message" 
+					click="{ 
+						multiplayerMinigameBridge.sendMinigameMessage(msgType.text, msg.text); 
+						appendOutput('Message sent');
+						msgType.text = ''; 
+						msg.text = '';
+					}" />
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="Game State:" />
+				<mx:TextInput id="gsAttribute" width="100%" toolTip="Attribute"/>
+				<mx:TextInput id="gsValue" width="100%" toolTip="Value"/>
+				<mx:Button label="Update game state game" 
+					click="{ 
+						multiplayerMinigameBridge.updateGameState(gsAttribute.text, gsValue.text);
+						gsAttribute.text = '';
+						gsValue.text = '';
+					}" />
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="Player state:" />
+				<mx:TextInput id="pAttribute" width="100%" toolTip="Attribute"/>
+				<mx:TextInput id="pValue" width="100%" toolTip="Value" />
+				<mx:Button label="Update player state" 
+					click="{ 
+						multiplayerMinigameBridge.updatePlayerState(multiplayerMinigameBridge.playerID, pAttribute.text, pValue.text);
+						pAttribute.text = '';
+						pValue.text = ''
+					}" />
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="Transmit message at interval (ms)" />
+				<mx:TextInput id="interval" width="100%" toolTip="Interval in ms"/>
+				<mx:TextInput id="repeatCount" width="100%" toolTip="Repeat count" />
+				<mx:Button label="Cancel" click="{ if(intervalTimer) intervalTimer.stop() }" />
+				<mx:Button label="Start transmit interval" click="{ startTransmitInterval(parseInt(interval.text), parseInt(repeatCount.text)) }" />
+			</mx:HBox>			
+		</mx:VBox>			
+		<mx:HBox width="100%" horizontalAlign="right">
+			<mx:Button label="Clear output" click=" { output.text = '' }" />
+			<mx:Button label="Award points" toolTip="Awards 10 points to the user" click="{ minigameBridge.awardGameScore(10) }" />
+			<mx:Button label="Ping once" enabled="{ canPing }" click=" { sendPing() }" />
+			<mx:Button label="Ping constantly" enabled="{ canPing }"  toggle="true" click="{ repeatPing = !repeatPing; if(repeatPing) sendPing() }" />
+			<mx:Button label="Ping constantly (With CPU Load)" enabled="{ canPing }"  toggle="true" click="{ repeatPing = !repeatPing; enableCPULoad = !enableCPULoad; if(repeatPing) sendPing() }" />
+			<mx:Button label="Leave game" click="{ minigameBridge.closeGame() }" />
+		</mx:HBox>
+	</mx:VBox> 
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.UIDUtil;
+			import flash.utils.getTimer;
+			import uk.co.dubit.platform.components.minigame.client.IMinigameBridge;
+			import uk.co.dubit.platform.components.minigame.client.multiplayer.IMultiplayerMinigameBridge;
+	 	
+	 		private var _minigameBridge:IMinigameBridge;
+	 		
+	 		private var _enableCPULoad:Boolean = false;
+			
+			[Bindable]
+			private var canPing:Boolean = false;
+			
+	 		private var repeatPing:Boolean = false
+	 		private var pingID:int = 0;
+	 		
+	 		private var intervalTimer:Timer;
+	 		
+	 		private function onCreationComplete() : void
+	 		{
+	 			intervalTimer = new Timer(0);
+	 			intervalTimer.addEventListener(TimerEvent.TIMER, onInterval);
+				intervalTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onIntervalComplete);
+	 		}
+		
+			public function get multiplayerMinigameBridge() : IMultiplayerMinigameBridge
+			{
+				return _minigameBridge as IMultiplayerMinigameBridge;
+			}
+			
+			public function set multiplayerMinigameBridge(value:IMultiplayerMinigameBridge) : void
+			{
+				_minigameBridge = value;
+				
+				appendOutput("Multiplayer Minigame bridge set");
+				
+				outputMinigameDetails();
+				
+				appendOutput("Joining multiplayer minigame");
+
+				/* This can be called at any time.  Any asset loading / heavy lifting can be done
+				   before joining the minigame **/
+				multiplayerMinigameBridge.joinMinigame(this);
+			}
+			
+			public function set minigameBridge(value:IMinigameBridge) : void
+			{
+				_minigameBridge = value;
+				
+				appendOutput("Single player minigame bridge set");
+				
+				outputMinigameDetails();
+				
+				multiplayerMinigameControls.visible = false;
+				multiplayerMinigameControls.includeInLayout = false;
+				
+				appendOutput("Player ID is " + minigameBridge.player["id"]);
+			}
+			
+			public function get minigameBridge() : IMinigameBridge
+			{
+				return _minigameBridge;
+			}
+			
+			private function outputMinigameDetails() : void
+			{
+				appendOutput("Minigame is: " + minigameBridge.getNodeData("name"));
+				appendOutput("Loaded from: " + minigameBridge.getNodeData("url"));
+			}
+			
+			/**
+			 * IMultiplayerGameListener interface methods
+			 */
+
+			public function onGameJoined() : void
+			{
+				appendOutput("Minigame joined!");
+				
+				appendOutput("Players ready:");
+				
+				for each(var player:Object in multiplayerMinigameBridge.players)
+				{
+					appendOutput(" -> " + player["id"]);
+				}
+				
+				canPing = multiplayerMinigameBridge.playerCount > 1;
+			}
+			
+			public function onGameJoinFailed(info:Object) : void
+			{
+				appendOutput("Failed to connect");
+				
+				multiplayerMinigameControls.visible = false;
+			}
+			
+			public function onGameStateUpdated(attribute:String, value:Object) : void
+			{
+				appendOutput("Game state updated [attribute=" + attribute + "] [value=" + value + "]");
+			}
+		
+			public function onPlayerStateUpdated(playerID:String, attribute:String, value:Object) : void
+			{
+				appendOutput("Player state updated [player=" + playerID + "] [attribute=" + attribute + "] [value=" + value + "]");
+			}
+
+			public function onPlayerEntered(player:Object) : void
+			{
+				appendOutput("Player " + player["id"] + " entered (Player count=" + multiplayerMinigameBridge.playerCount + ")");
+				
+				canPing = multiplayerMinigameBridge.playerCount > 1;
+			}
+
+			public function onPlayerLeft(player:Object) : void
+			{
+				appendOutput("Player " + player["id"] + " left (Player count=" + multiplayerMinigameBridge.playerCount + ")");
+				
+				canPing = multiplayerMinigameBridge.playerCount > 1;
+			}
+
+			public function onMessageReceived(type:String, message:Object) : void
+			{
+				switch(type) {
+					case "ping" : 		
+						appendOutput("Ping " + message["pingID"] + " received");
+						
+						replyToPing(message);				
+						break;
+						
+					case "pong" :
+						appendOutput("Ping " + message["pingID"] + " response received. Elasped time=" + (getTimer() - message["timestamp"]));
+							
+						if(repeatPing) sendPing();
+						break;
+					
+					default :
+						appendOutput("Received [Type=" + type + "] [Message=" + message + "]");
+				}
+			}
+			
+			// -------------- End of IMultiplayerGameListener interface methods --------------
+			
+			/**
+			 * Utility methods used in the sample minigame.
+			 */
+			
+			private function sendPing() : void
+			{
+				appendOutput("Sending ping (" + pingID + ")");
+				
+				var pingMessage:Object = {
+					"timestamp": getTimer(),// Time the message is being sent at
+					"pingID": pingID++		// Use the unique pingID and then increment it (To keep it unique)
+				}
+							
+				if(enableCPULoad)
+				{
+					// Tack on random crap to the message
+					for(var i:int = 0; i < 10; i++) pingMessage[i.toString()] = UIDUtil.createUID();
+				}
+				
+				multiplayerMinigameBridge.sendMinigameMessage("ping", pingMessage);
+			}
+			
+			private function replyToPing(pingMessage:Object) : void
+			{
+				appendOutput("Replying to ping (" + pingMessage["pingID"] + ")");
+				
+				// Reply with the original ping message (containing the timestamp when it was originally sent)
+				multiplayerMinigameBridge.sendMinigameMessage("pong", pingMessage);
+			}
+			
+			private function get enableCPULoad() : Boolean
+			{
+				return _enableCPULoad;
+			}
+			
+			private function set enableCPULoad(value:Boolean) : void
+			{
+				_enableCPULoad = value;
+				
+				removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				if(value) addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			}
+			
+			private function onEnterFrame(e:Event) : void
+			{
+				for(var i:int = 0; i < 50000; i++)
+				{
+					var x:Number = 9 ^ 9 ^ 9 ^ 9 ^ 9 ^ 9 ^ 9 ^ 9 ^ 9 ^ 9;
+					x += x * Math.pow(Math.cos(100) - Math.sin(100) + Math.tan(100), 100) * Math.sqrt(100) / (Math.random() + 100);
+				}
+			}
+			
+			private function startTransmitInterval(interval:int, count:int) : void
+			{
+				if(isNaN(interval) || isNaN(count)) return;
+				
+				intervalTimer.stop();
+				intervalTimer.delay = interval;
+				intervalTimer.repeatCount = count;
+				
+				intervalTimer.start();
+			}
+			
+			private function onInterval(e:TimerEvent) : void
+			{
+				sendPing();
+			}
+			
+			private function onIntervalComplete(e:TimerEvent) : void
+			{
+				appendOutput("Interval transmission complete");
+			}
+			
+			private function appendOutput(text:String) : void
+			{
+				output.text += text + "\n"
+				callLater(function() : void { output.verticalScrollPosition = output.maxVerticalScrollPosition } );
+			}
+		]]>
+	</mx:Script>
+</mx:Application>

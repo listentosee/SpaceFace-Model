@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Experience points="0">
+		<Level points="0" name="Yellow-Bellied Tenderfoot" message=""/>
+		<Level points="20" name="Slack-Jawed Tenderfoot" message="Congratulations! You just reach the level of Slack-Jawed Tenderfoot, as a reward you've been given 1 skill point to spend!"/>
+		<Level points="50" name="Addleheaded Greenhorn" message="Congratulations! You just reach the level of Addleheaded Greenhorn, as a reward you've been given 1 skill point to spend!"/>
+		<Level points="100" name="Crusty Ole Greenhorn" message="Congratulations! You just reach the level of Crusty Ole Greenhorn, as a reward you've been given 1 skill point to spend!"/>
+		<Level points="150" name="Handy Dandy Pilgrim" message="Congratulations! You just reach the level of Handy Dandy Pilgrim, as a reward you've been given 1 skill point to spend!"/>
+		<Triggers>
+			<OnLevelUp>
+				<Trace message="OnLevelUp level={Event.level}"/>
+				<AwardSkillPoints points="1"/>
+				<CreateNotification title="Woop! Level up!" body="{Event.level.message}" can_remove="true"/>
+			</OnLevelUp>
+			<OnAwardedExperience>
+				<Trace message="OnAwardedExperience level={Experience.level}"/>
+			</OnAwardedExperience>
+		</Triggers>
+	</Experience>
+</Include>

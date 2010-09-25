@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProductViewBase
+	width="100%" height="100%" backgroundColor="0" backgroundAlpha="0"
+	rollOver="{ if(!product.owned) productInfo.visible = true }"
+	rollOut="{ productInfo.visible = false }"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	xmlns="uk.co.dubit.platform.components.catalogue.ui.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:shared="uk.co.dubit.platform.components.shared.*">
+	
+	<mx:Script>
+		<![CDATA[			
+			import mx.effects.Fade;
+			
+			private function centerPreviewImage() : void
+			{
+				preview.x = (container.width / 2) - (preview.contentWidth / 2)
+				preview.y = (container.height / 2) - (preview.contentHeight / 2)
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas id="container" top="5" bottom="5" left="5" right="5" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<mx:Image id="preview" source="{ product.previewURL }"
+				  alpha="{ product.owned ? 0.5 : 1 }" complete="centerPreviewImage()" />
+		
+		<mx:Label id="ownedLabel" text="Owned" 
+				  filters="{ [ new DropShadowFilter() ] }"
+				  horizontalCenter="0" verticalCenter="0" visible="{ product.owned }" />
+		
+ 		<mx:VBox id="productInfo" width="100%" height="100%" mouseOver="{ if(!product.owned) productInfo.visible = true }"
+				 backgroundAlpha="0.2" backgroundColor="black" borderStyle="solid"
+				 showEffect="{ new Fade() }" hideEffect="{ new Fade() }" filters="{ [ new DropShadowFilter() ] }"
+				 verticalAlign="middle" horizontalAlign="center" visible="false">
+			
+			<mx:Label text="{ product.name }" maxWidth="100" truncateToFit="true" />
+			
+			<mx:Label text="Buy for:" />
+			
+			<mx:HBox width="100%" horizontalGap="0" horizontalAlign="center">
+				<mx:LinkButton label="{product.points} points" toolTip="Buy now" paddingLeft="0" paddingRight="0" fontSize="9" visible="{ product.points > -1 }" enabled="{ !product.owned }" click="{ product.purchase() }"  />
+				<mx:LinkButton label="{product.credits} credits" toolTip="Buy now" paddingLeft="0" paddingRight="0" fontSize="9" visible="{ product.credits > -1 }" enabled="{ !product.owned }" click="{ product.purchase() }"  />
+			</mx:HBox>
+		</mx:VBox>
+	</mx:Canvas>
+</ProductViewBase>

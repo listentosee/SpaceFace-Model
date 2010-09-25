@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Skills points="2">
+		<Skill id="bookreading" name="Reader" points="1" maximum="20" description="Increasing your reading skill allows you to read at a faster rate."/>
+		<Triggers>
+			<OnAwardedSkillPoints>
+				<Trace message="OnSkillPointAwarded points={Skills.points}"/>
+			</OnAwardedSkillPoints>
+			<OnUsedSkillPoints>
+				<Trace message="OnUsedSkillPoints skill={Event.skill}"/>
+			</OnUsedSkillPoints>
+		</Triggers>
+	</Skills>
+</Include>

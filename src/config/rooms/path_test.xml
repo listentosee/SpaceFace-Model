@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ChatRoom id="path_test" xmlns:xi="http://www.w3.org/2001/XInclude" startX="700" startY="470">
+
+	<Include href="config/rooms/includes/room_config.xml"/>
+
+	<MouseMovementController directions="12" id="movement"/>
+	<CollisionController target="{Room.player}" id="collision"/>
+	<Chat id="chatBox"/>
+	
+	<Collision width="1400" height="546" id="walkableArea" solid="true">
+		<Image assetID="hit_asset" id="hitAreaImage"/>
+	</Collision>
+
+	<Filters id="playerFilters">
+		<DepthFilter id="playerDepthFilter" scaleBack="0.5" scaleFront="0.48"/>
+	</Filters>	
+	
+	<Filters id="helperFilters">
+		<DepthFilter id="helperDepthFilter" scaleBack="2" scaleFront="2"/>
+	</Filters>
+	
+
+	<Sounds target="{Room.player}" id="sounds">
+		<Sound id="background_music" assetID="background_music_asset" play="false" looping="true"/>
+	</Sounds>
+	
+	<Scene id="scene" target="{Room.player}" viewportWidth="850" viewportHeight="445" width="1400" height="546">
+		
+		<DisplayObject2D id="sky" assetID="sky_asset"/>
+		<DisplayObject2D id="background" assetID="background_asset"/>
+		<DisplayObject2D id="click" assetID="click_asset" mouseEnabled="true" alpha="0"/>
+
+		<ZSortingDisplayObject id="furniture">		
+		</ZSortingDisplayObject>
+
+		<ZSortingDisplayObject id="playerMessages"/>
+		
+		<DisplayObject2D id="helper" displayObjectClass="uk.co.dubit.graphics.render2D.ActionPlayer" x="500" y="500" originX="0" originY="25" defaultSpeed="3">
+			<Attribute key="filters" value="{Room.helperFilters}" />
+			<Actions defaultAction="stand_test">
+				<Stand id="stand_test" path="[base.url]images/lab/npc_elf_stand.swf"/>
+				<Walk id="walk_test" path="[base.url]images/lab/npc_elf_walk.swf"/>
+			</Actions>
+		</DisplayObject2D>		
+	</Scene>
+	
+	<Assets id="assets">
+        <Asset id="background_music_asset" url="sounds/lab/music.mp3"/>
+        <Asset id="hit_asset" url="images/pathtest/background.png"/>
+        <Asset id="click_asset" url="images/lab/click.png"/>
+        <Asset id="light_filter_asset" url="images/lab/light.jpg"/>
+        <Asset id="blackout_asset" url="images/lab/blackout.swf"/>
+        <Asset id="background_asset" url="images/pathtest/background.jpg"/>
+        <Asset id="walk" url="images/lab/walk12.swf"/>
+        <Asset id="stand" url="images/lab/stand12.swf"/>
+    </Assets>
+
+</ChatRoom>

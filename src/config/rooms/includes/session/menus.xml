@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Menus>
+		<ContextMenu id="playerMenu" track="true" offsetX="0" offsetY="0">			
+			<MenuItem text="Start minigame API Tester">
+				<Triggers>
+					<onMenuItemSelected><OpenMinigame minigame="apiTester" /></onMenuItemSelected>
+				</Triggers>
+			</MenuItem>
+			
+			<MenuItem id="onShowAvatarEditor" text="Change clothes" toolTip="Customize your character"/>
+		</ContextMenu>
+			
+		<ContextMenu id="otherPlayerMenu" track="true" offsetX="0" offsetY="0">			
+			<MenuItem text="Start minigame API Tester (Multiplayer mode)">
+				<Triggers>
+					<onMenuItemSelected>
+						<InviteToMinigame minigame="apiTester" avatar="{Event.menu.target}" />
+					</onMenuItemSelected>	
+				</Triggers>	
+			</MenuItem>
+		</ContextMenu>			
+	</Menus>
+</Include>

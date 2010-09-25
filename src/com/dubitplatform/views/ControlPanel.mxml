@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow
+	width="360" height="450" title="My Stuff" showCloseButton="true" close="closeWindow()" creationComplete="closeWindow()"
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:backpack="uk.co.dubit.platform.components.backpack.*" xmlns:quest="uk.co.dubit.platform.components.quest.*" layout="absolute" xmlns:views="com.dubitplatform.views.*" xmlns:map="uk.co.dubit.platform.components.map.*" xmlns:achievements="uk.co.dubit.platform.components.achievements.*" xmlns:collections="uk.co.dubit.platform.components.collections.*">
+	
+	<mx:Script>
+        <![CDATA[
+            
+            public function closeWindow():void
+            {
+            	visible = false
+            }
+
+            public function set view (view : String) : void
+            {
+            	if (view.toLowerCase() == "quests") tabNavigator.selectedIndex = 0;
+            	if (view.toLowerCase() == "stuff") tabNavigator.selectedIndex = 1;
+            	if (view.toLowerCase() == "inventory") tabNavigator.selectedIndex = 1;
+            }            
+            
+       ]]>
+       
+	</mx:Script>
+	
+	<mx:TabNavigator id="tabNavigator" x="0" y="0" width="100%" height="100%" creationPolicy="all">
+		<mx:Canvas label="Quests" width="100%" height="100%">
+			<quest:QuestSkinContainer width="100%" height="100%"/>
+		</mx:Canvas>
+		<mx:Canvas label="Stuff" width="100%" height="100%">
+			<backpack:BackpackSkinContainer width="100%" height="100%"/>
+		</mx:Canvas>	
+		<mx:Canvas label="Notifications" width="100%" height="100%">
+			<views:NotificationsView width="100%" height="100%"/>
+		</mx:Canvas>	
+		<mx:Canvas label="Rooms" width="100%" height="100%">
+			<map:MapSkinContainer width="100%" height="100%"/>
+		</mx:Canvas>	
+		<mx:Canvas label="Trophies" width="100%" height="100%">
+			<achievements:AchievementsSkinContainer width="100%" height="100%"/>
+		</mx:Canvas>							
+	</mx:TabNavigator>
+
+</mx:TitleWindow>

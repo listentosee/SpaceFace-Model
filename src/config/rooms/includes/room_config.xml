@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<xi:include href="player_definition.xml" />	
+	<xi:include href="room_notification_handler.xml" />	
+
+	<Chat id="chatBox"/>
+	<CollisionController target="{Room.player}" />
+	<MouseMovementController yVelocityScale="0.3" directions="4" id="movement" />
+
+
+	<!-- Chat messages -->
+	<Trigger event="onSendChatMessage" gameObject="{Room}">
+        <ShowChatBubble gameObject="{Room.player}" message="{Event.message}" displayTime="5000"/>
+	</Trigger>
+	
+	<!-- Move the player when he clicks -->
+	<Trigger event="onClick" gameObject="{Room.click}">
+		<MoveTo targetX="{Event.x}" targetY="{Event.y}" />
+	</Trigger>
+
+	<!-- These are the actions you can perform in the world -->
+	<VerbController id="verbController"
+		skin="com.dubitplatform.views.VerbControllerView"
+		targetContainer="Verb" attachSkin="true"
+		customCursorClass="uk.co.dubit.platform.components.verb.VerbCustomCursor">
+
+		<Verb id="OnLookAt" name="Look at"/>
+		<Verb id="OnPickUp" name="Pick up"/>
+		<Verb id="OnTalkTo" name="Talk to"/>
+		<Verb id="OnUse" name="Use the"/>
+		<Verb id="OnRead" name="Read something from"/>
+		<Verb id="OnDig" name="Dig up"/>
+
+		<Triggers>
+			<onVerbBarOpened>
+			</onVerbBarOpened>
+		</Triggers>
+	</VerbController>
+
+	<!-- Generic Messages for the Verb Bar -->
+	<BehaviourDefinition id="cantLookAt">
+		<ShowPlayerBubble message="It's a {Event.gameObject.name}" />
+	</BehaviourDefinition>
+
+	<BehaviourDefinition id="cantGrab">
+		<ShowPlayerBubble message="I shouldn't, it's not mine" />
+	</BehaviourDefinition>
+
+	<BehaviourDefinition id="cantTalkTo">
+		<ShowPlayerBubble message="I don't want to talk to that" />
+	</BehaviourDefinition>
+	
+	<BehaviourDefinition id="readAction">
+		<If expression="({Meters.energy.amount} >= {15})">
+			<Then>
+				<SetValues target="{Meters.energy}" amount="({Meters.energy.amount} - {15})" />
+				<SetValues target="{Event}" reduction="({Skills.bookreading.points}*{200})" />
+				<SetValues target="{ActivityBars.reading}" duration="({5000}-{Event.reduction})" />
+				<OpenActivityBar activityBar="reading" targettedObject="{Event.handler}"/>
+				<Call behaviourID="mouseOff" scope="{Rooms.currentRoom}"/>
+			</Then>
+			<Else>
+				<ShowBubble gameObject="{Room.player}" message="I'm too tired"/>
+			</Else>
+		</If>
+	</BehaviourDefinition>
+	
+	<BehaviourDefinition id="mouseOff">
+		<ForEach in="{Room.renderObjects}">
+			<If expression="({Event.iteration.mouseEnabled} == {true})">
+				<Then>
+					<SetValues target="{Event.iteration}" mouseEnabled="false" previousMouseEnabled="true"/>
+				</Then>
+			</If>
+			<If expression="({Event.iteration.verbEnabled} == {true})">
+				<Then>
+					<SetValues target="{Event.iteration}" verbEnabled="false" previousVerbEnabled="true"/>
+				</Then>
+			</If>
+		</ForEach>
+	</BehaviourDefinition>
+		
+	<BehaviourDefinition id="mouseOn">
+		<ForEach in="{Room.renderObjects}">
+			<If expression="({Event.iteration.previousMouseEnabled} == {true})">
+				<Then>
+					<SetValues target="{Event.iteration}" mouseEnabled="true" previousMouseEnabled=""/>
+				</Then>
+			</If>
+			<If expression="({Event.iteration.previousVerbEnabled} == {true})">
+				<Then>
+					<SetValues target="{Event.iteration}" verbEnabled="true" previousVerbEnabled=""/>
+				</Then>
+			</If>
+		</ForEach>
+	</BehaviourDefinition>
+	
+	<!-- Branching conversation dialogue -->
+	<Dialogue id="dialogue" skin="com.dubitplatform.views.BranchingConversationView" targetContainer="dialogue">
+		<Triggers>
+			<OnMessage></OnMessage>
+			<OnBeginDialogue>
+				<OpenDialogue />
+			</OnBeginDialogue>
+			<OnCompleteDialogue></OnCompleteDialogue>
+		</Triggers>
+	</Dialogue>
+</Include>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:CameraSkinViewBase
+	mouseDown="{ startDrag() }" mouseUp="{ stopDrag() }"
+	addedToStage="onAddedToStage()"	
+	removedFromStage="onRemovedFromStage()"
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:ui="uk.co.dubit.platform.components.camera.ui.*" backgroundColor="red"
+				width="400" height="300">
+	
+
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.utils.IAttributes;
+			
+			override public function set node(value:IAttributes):void
+			{
+				super.node = value;
+				
+			}
+			private function onAddedToStage() : void
+			{
+				addEventListener(Event.ENTER_FRAME, refreshViewFinder);
+			}
+			
+			private function onRemovedFromStage() : void
+			{
+				removeEventListener(Event.ENTER_FRAME, refreshViewFinder);
+			}
+			
+			private function refreshViewFinder(e:Event = null) : void
+			{
+				camera.refreshViewFinder();
+			}
+		
+		]]>
+	</mx:Script>
+
+	<mx:Image id="photoView" width="100%" height="100%" creationComplete="{ photoView.source = new Bitmap(camera.getViewFinder()) }" />
+
+</ui:CameraSkinViewBase>

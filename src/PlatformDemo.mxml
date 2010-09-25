@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app:NexusBase
+	width="100%" height="100%" minHeight="550" minWidth="1000" 
+	layout="absolute" 
+	backgroundColor="black" 
+	creationComplete="onCreationComplete()"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:app="uk.co.dubit.platform.app.*"
+	xmlns:dialogue="uk.co.dubit.platform.components.dialogue.*" 
+	xmlns:skin="uk.co.dubit.platform.components.skin.*" 
+	xmlns:skills="uk.co.dubit.platform.components.skills.*" 
+	xmlns:growl="uk.co.dubit.platform.components.growl.*" 
+	xmlns:minigame="uk.co.dubit.platform.components.minigame.*" 
+	xmlns:ui="uk.co.dubit.platform.components.rooms.ui.*" 
+	xmlns:video="uk.co.dubit.platform.components.video.*" 
+	xmlns:verb="uk.co.dubit.platform.components.verb.*" 
+	xmlns:chat="uk.co.dubit.platform.components.chat.*" >
+	
+	<mx:Style source="style/style.css"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.platform.scriptEngine.gameObject.GameObjectListener;
+			import com.dubitplatform.views.CollectionsPanel;
+			import com.dubitplatform.views.ControlPanel;
+			import com.dubitplatform.views.MapTitleWindow;
+			import com.dubitplatform.views.QuickChatView;
+			
+			import mx.managers.PopUpManager;
+			
+			import uk.co.dubit.logging.LoggingPanel;
+			import uk.co.dubit.platform.components.backpack.Backpack;
+			import uk.co.dubit.platform.components.catalogue.Shops;
+			import uk.co.dubit.platform.components.experience.Experience;
+			import uk.co.dubit.platform.components.meters.IMeter;
+			import uk.co.dubit.platform.components.meters.Meters;
+			import uk.co.dubit.platform.components.quest.QuestModel;
+			import uk.co.dubit.platform.components.session.SessionModel;
+			import uk.co.dubit.platform.scriptEngine.gameObject.IGameObject;
+			import uk.co.dubit.properties.Properties;
+			import uk.co.dubit.utils.StringUtils;
+
+			private var controlPanel:ControlPanel;
+			private var loggingPanel:LoggingPanel;
+			private var collectionsPanel:CollectionsPanel;
+			private var energyMeter:IMeter;
+			
+			private var placeholders : Placeholders;
+					
+			private function onCreationComplete () : void
+			{
+				controlPanel = PopUpManager.createPopUp(this, ControlPanel) as ControlPanel;
+				controlPanel.filters = [new DropShadowFilter(0, 0, 0, 0.7, 40, 40, 1, 3)];
+				controlPanel.visible = false;	
+				
+				loggingPanel = PopUpManager.createPopUp(this, LoggingPanel) as LoggingPanel;
+				loggingPanel.filters = [new DropShadowFilter(0, 0, 0, 0.7, 40, 40, 1, 3)];
+				loggingPanel.visible = false;
+				
+				collectionsPanel = PopUpManager.createPopUp(this, CollectionsPanel) as CollectionsPanel;
+				collectionsPanel.filters = [new DropShadowFilter(0, 0, 0, 0.7, 40, 40, 1, 3)];
+				collectionsPanel.visible = false;
+			}
+			
+            public function openControlPanel (view : String = null) : void
+            {            	
+            	if (!controlPanel.visible) PopUpManager.centerPopUp(controlPanel);
+            	PopUpManager.bringToFront(controlPanel);
+            	controlPanel.view = view;
+            	controlPanel.visible = true;
+            }	
+            
+            public function openDebugPanel () : void
+            {            	
+             	if (!loggingPanel.visible) PopUpManager.centerPopUp(loggingPanel);
+             	PopUpManager.bringToFront(loggingPanel);
+            	loggingPanel.visible = true;           	 
+            }
+            
+            public function openCollectionsPanel () : void
+            {            	
+             	if (!collectionsPanel.visible) PopUpManager.centerPopUp(collectionsPanel);
+             	PopUpManager.bringToFront(collectionsPanel);
+            	collectionsPanel.visible = true;           	 
+            }	
+            
+            private function openShop() : void
+            {
+            	Shops.getInstance().getShopByID("1").open();
+            }      
+
+		]]>
+	</mx:Script>	
+
+	<mx:Fade duration="500" id="fadeInEffect" alphaFrom="0" alphaTo="1"/>
+	<mx:Fade duration="1000" id="fadeOutEffect" alphaFrom="1" alphaTo="0" startDelay="1000"/>
+
+	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off">
+
+		<ui:ChatRoomSkinContainer id="chatRoomSkinContainer" width="850" height="400" y="100" backgroundColor="black" horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalCenter="0"/>
+		<chat:ChatSkinContainer id="chatSkinContainer" width="850" height="30" y="515" horizontalCenter="0" />			
+		<verb:VerbSkinContainer id="verbSkinContainer" width="850" height="400" y="100" horizontalCenter="0" />	
+		<skin:BasicSkinContainer id="quickChatSkinContainer" containerID="quickChatContainer" width="850" height="400" y="100" horizontalCenter="0"/>	
+		<video:VideosSkinContainer id="videoContainer" outEffect="{fadeOutEffect}" width="850" height="400" horizontalCenter="0" y="100"/>
+		<ui:ChatRoomPreloaderSkinContainer id="chatRoomPreloaderContainer" width="850" height="400" y="100" mouseEnabled="false" horizontalCenter="0" />
+		<minigame:MinigameSkinContainer width="850" height="445" y="100" mouseEnabled="false" horizontalCenter="0" />
+		<growl:StackingGrowlSkinContainer width="800" height="350" y="125" horizontalCenter="0" mouseEnabled="false" />
+		
+		<mx:ControlBar id="bar" width="850" horizontalCenter="0" y="60" height="30" paddingLeft="5">
+			<mx:LinkButton label="Menu" click="openControlPanel('quests');"/>	
+			<mx:LinkButton label="Collections" click="openCollectionsPanel();"/>	
+			<skills:SkillsSkinContainer width="110"/>
+			<mx:LinkButton label="Shop" click="openShop();"/>
+			<mx:Spacer width="100%"/>
+			<mx:Label text="{Experience.getInstance().currentLevel.name} ({Experience.getInstance().points}/{Experience.getInstance().nextLevel.points}XP)"/>
+			<mx:Text id="energyDisplay"/>			
+		</mx:ControlBar>
+				
+		<skin:PopupSkinContainer containerID="shopContainer" width="100%" height="100%" />
+		<dialogue:DialogueSkinContainer id="dialogueSkinContainer" outEffect="{fadeOutEffect}" inEffect="{fadeInEffect}" horizontalCenter="0" width="850" height="400" y="100"/>				
+		<skin:BasicSkinContainer containerID="worldOverlay" width="840" height="398" y="100" horizontalCenter="0" />
+	</mx:Canvas>
+	
+	<skin:BasicSkinContainer containerID="appOverlay" width="100%" height="100%"/>
+		
+</app:NexusBase>

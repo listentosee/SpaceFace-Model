@@ -1,0 +1,94 @@
+<project name="DubitPlatform" default="config-build">
+
+	<taskdef name="xcluder" classname="gr.abiss.xcluder.XercesXcluder">
+		<classpath>
+			<pathelement location="./build/tasks/xcluder-0.9.2.jar" />
+			<pathelement location="./build/tasks/xercesImpl.jar" />
+		</classpath>
+	</taskdef>
+	
+	<property file="./build/build.properties" />
+
+	<target name="build" depends="check-settings, clean, copy-config, copy-assets, create-html-wrapper"/>		
+	<target name="config-build" depends="copy-config, copy-assets, create-html-wrapper"/>
+
+	<target name="copy-config" description="Copies local config">
+		<echo message="Beginning copying GAML" />
+		<copy todir="${dir.bin}/config" includeEmptyDirs="false">
+			<fileset dir="${dir.config}">
+				<exclude name="dev/**/*" />
+			</fileset>
+		</copy>
+		<mkdir dir="${dir.bin}/config/rooms" />
+		<xcluder indent="no" destdir="${dir.bin}/config/rooms">
+			<fileset dir="${dir.config}/rooms">
+				<include name="**/*.xml" />
+			</fileset>
+		</xcluder>
+		<!--<delete dir="${dir.bin}/config/rooms/includes" />-->		
+		<echo message="Completed copying GAML" />
+	</target>
+
+	<target name="copy-assets" description="Copies project assets to the build folder">
+		<echo message="Beginning copying assets" />
+		<echo message="Deleting images" />
+		<delete dir="${dir.bin}/images" />
+		<echo message="Copying images" />
+		<copy todir="${dir.bin}/images">
+			<fileset dir="${dir.assets}/images" />
+		</copy>
+		<echo message="Copying games" />
+		<copy todir="${dir.bin}/games">
+			<fileset dir="${dir.assets}/games" />
+		</copy>
+		<echo message="Copying videos" />
+		<copy todir="${dir.bin}/videos">
+			<fileset dir="${dir.assets}/videos" />
+		</copy>
+		<echo message="Deleting sounds" />
+		<delete dir="${dir.bin}/sounds" />		
+		<echo message="Copying sounds" />
+		<copy todir="${dir.bin}/sounds">
+			<fileset dir="${dir.assets}/sounds" />
+		</copy>
+		<echo message="Deleting avatar" />
+		<delete dir="${dir.bin}/avatar" />		
+		<echo message="Copying avatar" />
+		<copy todir="${dir.bin}/avatar">
+			<fileset dir="${dir.assets}/avatar" />
+		</copy>		
+		<echo message="Completed copying assets" />
+	</target>
+
+	<target name="create-html-wrapper" description="Creates a html wrapping for both debug versions and no-debug in the bin folder (index_donotdeploy.html,mm-debug.html).">
+		<echo message="Beginning creating HTML wrapper" />
+		<copy todir="${dir.bin}" includeEmptyDirs="false">
+			<fileset dir="${dir.assets}/html">
+				<include name="*.html" />
+				<include name="*.js" />
+				<include name="*.swf" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="swfname" value="${build.application}.swf" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		<echo message="Completed creating HTML wrapper" />
+	</target>
+	
+	<target name="clean">
+		<echo message="Beginning clean up of files and folders from bin directory"/>
+		<delete includeemptydirs="true" quiet="true">
+			<fileset dir="${dir.bin}" includes="**/*" excludes="*.swf"/>
+		</delete>
+		<echo message="Completed clean up"/>
+  	</target>
+
+	<target name="check-settings">
+		<echo message="Checking build environment"/>
+		<fail unless="build.mxmlc">build.mxmlc must be set in the build.properties</fail> 
+		<echo message="Passed checks"/>
+  	</target>
+	
+</project>

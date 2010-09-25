@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Actions xmlns:xi="http://www.w3.org/2001/XInclude">
+	<xi:include href="actions/stand_front_male.xml" />
+	<xi:include href="actions/stand_side_male.xml" />
+	<xi:include href="actions/stand_back_male.xml" />
+	<xi:include href="actions/walk_front_male.xml" />
+	<xi:include href="actions/walk_side_male.xml" />
+	<xi:include href="actions/walk_back_male.xml" />
+	<xi:include href="actions/magic_male.xml" />
+	
+	<xi:include href="actions/stand_front_female.xml" />
+	<xi:include href="actions/stand_side_female.xml" />
+	<xi:include href="actions/stand_back_female.xml" />
+	<xi:include href="actions/walk_front_female.xml" />
+	<xi:include href="actions/walk_side_female.xml" />
+	<xi:include href="actions/walk_back_female.xml" />
+	<xi:include href="actions/magic_female.xml" />
+</Actions>

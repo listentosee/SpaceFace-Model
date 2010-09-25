@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin:TitleWindowSkin
+	width="200" creationComplete="onCreationComplete()"
+	title="{ growl.notification.title }" showCloseButton="true" close="{ closeGrowl(); }"
+	implements="uk.co.dubit.platform.components.growl.IGrowlSkin"
+	xmlns="uk.co.dubit.platform.components.growl.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:skin="uk.co.dubit.platform.components.skin.*">
+	
+	<mx:Text id="textArea" width="100%" height="50" selectable="false" text="{ growl.notification.body }" truncateToFit="true" />
+	
+	<mx:Script>
+		<![CDATA[
+			import fl.motion.easing.Sine;
+			import com.gskinner.motion.GTween;
+			import uk.co.dubit.platform.components.skin.SkinContainerRegister;
+			import mx.managers.PopUpManager;
+			import uk.co.dubit.platform.components.growl.IGrowl;
+			
+			private var _growl:IGrowl;
+			
+			private function onCreationComplete() : void
+			{
+				alpha = 0;
+				textArea.alpha = 0;
+				
+				var textTween:GTween = new GTween(textArea, 0.5, {alpha:1}, {autoPlay:false});
+				var growlTween:GTween = new GTween(this, 0.5, {alpha:1}, {ease:Sine.easeIn, nextTween:textTween});
+			}
+			
+			[Bindable]
+			public function get growl() : IGrowl
+			{
+				return _growl;
+			}
+			
+			public function set growl(value:IGrowl) : void
+			{
+				_growl = value;
+			}
+			
+			private function closeGrowl() : void
+			{
+				SkinContainerRegister.getInstance().getContainer("growlContainer").removeSkin(this);
+			}
+		]]>
+	</mx:Script>
+	
+</skin:TitleWindowSkin>

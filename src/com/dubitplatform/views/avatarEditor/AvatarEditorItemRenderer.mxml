@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProductViewBase
+	width="100%" height="100%" backgroundColor="0" backgroundAlpha="0"
+	rollOver="{ productInfo.visible = true }"
+	rollOut="{ productInfo.visible = false }"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	xmlns="uk.co.dubit.platform.components.catalogue.ui.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:shared="uk.co.dubit.platform.components.shared.*">
+	
+	<mx:Script>
+		<![CDATA[			
+			import mx.effects.Fade;
+			import mx.events.ListEvent;
+			
+			private function centerPreviewImage() : void
+			{
+				preview.x = (container.width / 2) - (preview.contentWidth / 2)
+				preview.y = (container.height / 2) - (preview.contentHeight / 2)
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas id="container" top="5" bottom="5" left="5" right="5" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<mx:Image id="preview" source="{ product.previewURL }"
+				  alpha="{ product.owned ? 0.5 : 1 }" complete="centerPreviewImage()" />
+		
+		<mx:VBox id="productInfo" width="100%" height="100%"
+				 backgroundAlpha="0.2" backgroundColor="black" borderStyle="solid"
+				 showEffect="{ new Fade() }" hideEffect="{ new Fade() }" filters="{ [ new DropShadowFilter() ] }"
+				 verticalAlign="middle" horizontalAlign="center" visible="false">
+			
+			<mx:Label text="{ product.name }" maxWidth="100" truncateToFit="true" />
+			
+			<mx:Button label="Click to wear" />
+		</mx:VBox>
+	</mx:Canvas>
+</ProductViewBase>

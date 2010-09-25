@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ShopSkinViewBase 
+	width="100%" height="100%"
+	xmlns="uk.co.dubit.platform.components.catalogue.ui.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:shop="com.dubitplatform.views.shop.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ItemClickEvent;
+			
+			import uk.co.dubit.platform.components.catalogue.IProductGroup;
+			import uk.co.dubit.platform.components.catalogue.ui.ProductGroupLoadMode;
+			import uk.co.dubit.platform.components.session.SessionModel;
+			
+			private function onProductGroupChanged(e:ItemClickEvent) : void
+			{
+				productGroupView.productGroup = IProductGroup(e.item);
+			}
+
+		]]>
+	</mx:Script>
+	
+	<mx:Form width="100%" height="100%">
+		<mx:FormItem label="Select a category:" width="100%" height="100%">				
+			<mx:VBox width="100%" height="100%">
+				<mx:TabBar labelField="name" toolTipField="description"
+						   dataProvider="{ shop.productGroups }" itemClick="onProductGroupChanged(event)" />
+				
+				<shop:ShopProductView id="productGroupView"
+									  width="100%" height="100%"
+									  avatar="{ SessionModel.getInstance().currentAvatar }"
+									  loadMode="{ ProductGroupLoadMode.ALL }" />
+			</mx:VBox>			
+		</mx:FormItem>
+	</mx:Form>
+</ShopSkinViewBase>

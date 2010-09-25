@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:List
+	useRollOver="false" borderStyle="none" 
+	rowHeight="30" columnWidth="170"
+	itemRenderer="{ new ClassFactory(QuickChatMenuItem) }"
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	mouseChildren="true">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.listClasses.IListItemRenderer;
+			
+			/**
+			 * Overridden to stop drawing any selection indicator  
+			 */ 
+			
+			override protected function drawSelectionIndicator(indicator:Sprite, x:Number, y:Number, width:Number, height:Number, color:uint, itemRenderer:IListItemRenderer):void {}
+		]]>
+	</mx:Script>
+</mx:List>

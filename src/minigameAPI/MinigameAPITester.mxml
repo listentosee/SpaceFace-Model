@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	layout="absolute"
+	minHeight="400" minWidth="830"
+	width="100%" height="100%"
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:components="minigameAPI.components.*"
+	implements="uk.co.dubit.platform.components.minigame.client.IMinigameClient,
+				uk.co.dubit.platform.components.minigame.client.multiplayer.IMultiplayerMinigameClient,
+				uk.co.dubit.platform.components.minigame.client.multiplayer.IMultiplayerGameListener">
+	
+	<mx:VBox width="100%" height="100%" paddingTop="2" paddingBottom="2" paddingLeft="2" paddingRight="2">
+		<mx:Label width="100%" text="Dubit Platform Minigame API Test Suite" textAlign="center" fontWeight="bold" fontSize="20" />
+					
+		<mx:HDividedBox width="100%" height="100%" >
+
+			<mx:VBox minWidth="415" height="100%">
+				<mx:Label text="API Features:" />
+				
+				<mx:Accordion width="100%" height="100%">
+					<components:EnginePanel label="GAML Engine" width="100%" height="100%" apiTester="{ this }" />
+					<components:EventPanel label="GAML Events" width="100%" height="100%" apiTester="{ this }" />	
+					<components:MinigamePanel label="Standard minigame features" width="100%" height="100%" apiTester="{ this }" />
+					<components:MultiplayerPanel id="multiplayerPanel" label="Multiplayer features" width="100%" height="100%" apiTester="{ this }" enabled="false" />
+				</mx:Accordion>
+			</mx:VBox>
+			
+			<mx:VBox width="100%" height="100%">
+				<mx:Label text="API output:" />
+				<mx:Canvas width="100%" height="100%">
+					<mx:TextArea id="outputTextArea" width="100%" height="100%" 
+								 fontSize="10" wordWrap="true" selectable="false" editable="false"/>
+					
+					<mx:HBox width="100%" bottom="4" right="4" horizontalAlign="right">
+						<mx:Button label="Clear output" click="{ outputTextArea.text = '' } " />
+						<mx:Button label="Close API Test Suite" click="{ minigameBridge.closeGame() }" />
+					</mx:HBox>
+				</mx:Canvas>
+			</mx:VBox>
+		</mx:HDividedBox>
+	</mx:VBox>
+	
+	<mx:Script>
+		<![CDATA[
+			import minigameAPI.components.FeatureDescriptions;
+			
+			import uk.co.dubit.platform.components.minigame.client.IMinigameBridge;
+			import uk.co.dubit.platform.components.minigame.client.multiplayer.IMultiplayerMinigameBridge;
+			
+			private var _minigameBridge:IMinigameBridge;
+			
+			/* IMinigameClient interface implementation */
+			[Bindable]
+			public function get minigameBridge() : IMinigameBridge
+			{
+				return _minigameBridge;
+			}
+			
+			public function set minigameBridge(value:IMinigameBridge) : void
+			{
+				_minigameBridge = value;
+			}
+			
+			/* IMultiplayerMinigameClient interface implementation */		
+			[Bindable]
+			public function get multiplayerMinigameBridge() : IMultiplayerMinigameBridge
+			{
+				return minigameBridge as IMultiplayerMinigameBridge;
+			}
+			
+			public function set multiplayerMinigameBridge(value:IMultiplayerMinigameBridge) : void
+			{
+				minigameBridge = value;
+				
+				multiplayerPanel.enabled = multiplayerMinigameBridge != null;
+			}
+			
+			/* IMultiplayerGameListener interface implementation */
+			/**
+			 * Called when the minigame has successfully connected to the server
+			 */
+			public function onGameJoined() : void
+			{
+				multiplayerPanel.minigameConnected = true;
+				
+				appendOutputToTextArea("Connected to the multiplayer minigame session", multiplayerPanel.outputTextColour);
+				
+				multiplayerPanel.refeshPlayerList();
+			}
+			
+			/**
+			 * Called if there is an error connecting to the minigame se
+			 */
+			public function onGameJoinFailed(message:Object) : void
+			{
+				multiplayerPanel.minigameConnected = false;
+				
+				appendOutputToTextArea("Connection to the multiplayer minigame session failed!", multiplayerPanel.outputTextColour);
+			}
+				
+			/**
+			 * Called when the minigame gamestate was updated by a client
+			 */
+			public function onGameStateUpdated(attribute:String, value:Object) : void
+			{
+				
+			}
+				
+			/**
+			 * Called when a minigame player attribute was updated by a client
+			 */
+			public function onPlayerStateUpdated(playerID:String, attribute:String, value:Object) : void
+			{
+				
+			}
+				
+			/**
+			 * Called when a player enters the minigame
+			 */
+			public function onPlayerEntered(player:Object) : void
+			{
+				appendOutputToTextArea("Player [" + player["id"] + "] joined the game", multiplayerPanel.outputTextColour);
+				
+				multiplayerPanel.refeshPlayerList();
+			}
+					
+			/**
+			 * Called when a player leaves the minigame
+			 */
+			public function onPlayerLeft(player:Object) : void
+			{
+				appendOutputToTextArea("Player [" + player["id"] + "] left the game", multiplayerPanel.outputTextColour);
+				
+				multiplayerPanel.refeshPlayerList();
+			}
+						
+			/**
+			 * Called when a message is received from the minigame server
+			 */
+			public function onMessageReceived(type:String, message:Object) : void
+			{
+				
+			}
+			
+			/* Util functions */	
+			public function appendOutputToTextArea(message:String, htmlColor:String = "#000000") : void
+			{
+				outputTextArea.htmlText += '<font color="' + htmlColor + '">' + message + '</font><br />'
+					
+				// Keep the list scrolled to the bottom
+				callLater(function() : void 
+				{ 
+					outputTextArea.verticalScrollPosition = outputTextArea.maxVerticalScrollPosition
+				});
+			}
+		]]>
+	</mx:Script>
+	
+</mx:Application>

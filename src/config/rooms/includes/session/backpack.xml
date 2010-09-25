@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Backpack>
+		<!-- The 3 cogs used on the fireplace -->
+		<Possession id="cog1" name="Large Cog" description="A large sized cog from some machinery" previewURL="images/backpack/cog_one_backpack.swf" quantity="1"/>
+		<Possession id="cog2" name="Medium Cog" description="A medium sized cog from some machinery" previewURL="images/backpack/cog_two_backpack.swf" quantity="1"/>
+		<Possession id="cog3" name="Small Cog" description="A small sized cog from some machinery" previewURL="images/backpack/cog_three_backpack.swf" quantity="1"/>
+		
+		<!-- The tool kit, spring, 3 lenses and shard of glass used for the telescope -->
+		<Possession id="toolsbp" name="Glass Crafting Tools" description="A glass crafting tool kit" previewURL="images/backpack/tools_backpack.swf" quantity="1"/>
+		<Possession id="glassbp" name="A shard of glass" description="A shard if glass from the broken window" previewURL="images/backpack/glass_backpack.swf" quantity="1"/>
+		<Possession id="lens_one_backpack" name="Telescopic lens" description="A telescopic lens" previewURL="images/backpack/lens_one_backpack.swf" quantity="1"/>
+		<Possession id="lens_two_backpack" name="Telescopic lens" description="A telescopic lens" previewURL="images/backpack/lens_two_backpack.swf" quantity="1"/>
+		<Possession id="toolsbp_glassbp" name="Telescopic lens" description="A telescopic lens" previewURL="images/backpack/lens_three_backpack.swf" quantity="1"/>
+		<Possession id="spring_backpack" name="A tungsten spring" description="A sproingy bouncy spring, made from high tensile tungsten, a good way of storing energy" previewURL="images/backpack/spring_backpack.swf" quantity="0"/>
+		
+		<!-- The 3 pendulums for the grandfather clock -->
+		<Possession id="pendulum1bp" name="A pendulum" description="A pendulum from a grandfather clock" previewURL="images/backpack/pendulum_one_backpack.swf" quantity="0"/>
+		<Possession id="pendulum2bp" name="A pendulum" description="A pendulum from a grandfather clock" previewURL="images/backpack/pendulum_two_backpack.swf" quantity="0"/>
+		<Possession id="pendulum3bp" name="A pendulum" description="A pendulum from a grandfather clock" previewURL="images/backpack/pendulum_three_backpack.swf" quantity="0"/>
+
+		<!-- Currently not used -->
+		<Possession id="journal_backpack" name="A journal" description="It doesn't look like it has been used in awhile" previewURL="images/backpack/journal_backpack.swf" quantity="0"/>
+
+		<Combinations>
+			<Combination possession1="{Backpack.toolsbp}" possession2="{Backpack.glassbp}" success="It looks like i've made a lens of some sort" fail="That didn't seem to work very well"/> <!-- This makes the 3rd lens -->
+		</Combinations>
+
+		<Triggers>
+			<OnAdded>
+				<Trace message="OnAddedCollectable {Event.possession.id}"/>
+				<AwardExperiencePoints points="5"/>
+			</OnAdded>
+			<OnRemoved>
+				<Trace message="OnRemovedCollectable {Event.possession.id}"/>
+			</OnRemoved>
+			<OnSelected>
+				<Trace message="OnSelectedCollectable {Event.possession.id}"/>
+			</OnSelected>			
+			<OnCombinationSuccess>
+				<Trace message="Successfully combined {Event.possession1.name} with {Event.possession2.name} message={Event.combination.success}"/>
+				<Call behaviourID="ShowPlayerBubble" scope="{Rooms.currentRoom}" message="{Event.combination.success}"/>
+			</OnCombinationSuccess>
+			<OnCombinationFail>
+				<Trace message="Failed to combine {Event.possession1.name} with {Event.possession2.name} message={Event.combination.fail}"/>
+				<Call behaviourID="ShowPlayerBubble" scope="{Rooms.currentRoom}" message="{Event.combination.fail}"/>
+			</OnCombinationFail>
+			<OnCombinationUnknown>
+				<Trace message="I can't combinate a {Event.possession1.name} with a {Event.possession2.name}!"/>
+				<Call behaviourID="ShowPlayerBubble" scope="{Rooms.currentRoom}" message="They don't seem to fit together"/>
+			</OnCombinationUnknown>	
+		</Triggers>
+	</Backpack>
+</Include>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	
+	<mx:Label>
+		<mx:text><![CDATA[
+			Minigames can dispatch events (with optional data attached) into the GAML engine at any time.  
+			These events can be handled in GAML and used for any purpose the GAML author wished.  
+			For example, collecting an item in a minigame could cause a door a room to open.
+		]]></mx:text>
+	</mx:Label>	
+</mx:Canvas>

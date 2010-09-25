@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CollectionsViewBase xmlns="uk.co.dubit.platform.components.collections.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:shared="uk.co.dubit.platform.components.shared.*">
+	
+		<mx:Script>
+			<![CDATA[
+				import uk.co.dubit.platform.components.collections.ICollectable;
+			]]>
+		</mx:Script>
+	
+		<mx:TabNavigator x="0" y="0" width="100%" height="100%" creationPolicy="all">
+			<mx:Repeater id="collectionsRepeater" dataProvider="{ collections.collectionList }" >
+				<mx:VBox width="100%" height="100%" label="{ collectionsRepeater.currentItem.name }" paddingLeft="2">
+
+					<mx:Text text="{collectionsRepeater.currentItem.description}" width="100%" paddingLeft="5" paddingRight="5"/>
+					<mx:Text text="You have {collectionsRepeater.currentItem.remainingCollectables} left to collect!" width="100%" paddingLeft="5" paddingRight="5"/>
+						
+					<mx:TileList dataProvider="{collectionsRepeater.currentItem.collectableList}" verticalScrollPolicy="on" width="100%" height="100%" backgroundAlpha="0" borderStyle="none" useRollOver="false" paddingLeft="5">
+				
+						<mx:itemRenderer>
+							<mx:Component>
+										
+								<mx:VBox width="110" height="110" paddingRight="5" paddingLeft="5" horizontalAlign="center">
+									<mx:Box borderColor="black" borderStyle="solid" paddingBottom="4" paddingTop="5" paddingLeft="5" paddingRight="4">
+										<shared:SmoothImage toolTip="{data.name} ({data.quantity})" source="{data.imageURL}" width="90" height="80" scaleContent="true" alpha="{data.quantity >= 1 ? 1 : 0.2}"/>	
+									</mx:Box>
+								</mx:VBox>						
+											
+		    				</mx:Component>
+						</mx:itemRenderer>
+					</mx:TileList>
+						
+			   </mx:VBox>				
+			</mx:Repeater>			
+		</mx:TabNavigator>
+		
+</CollectionsViewBase>

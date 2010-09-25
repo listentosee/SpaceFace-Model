@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Profiles>
+		<Profile id="playerProfile" skin="com.dubitplatform.views.ProfileSkinTitleWindow" name="George Peckham" health="100" targetContainer="shopContainer"/>
+		<Triggers>
+			<onProfileOpened>
+				<GetProfileFor profile="{Event.profile}" avatar="{Event.profile.avatar}" />
+			</onProfileOpened>
+		</Triggers>
+	</Profiles>
+</Include>

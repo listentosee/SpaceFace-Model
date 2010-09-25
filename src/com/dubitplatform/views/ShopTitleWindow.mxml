@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TitleWindowSkin
+	width="100%" height="100%" title="{ IShop(node).name }" showCloseButton="true" close="{ IShop(node).close() }"
+	xmlns="uk.co.dubit.platform.components.skin.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:shop="com.dubitplatform.views.shop.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.platform.components.catalogue.IShop;
+		]]>
+	</mx:Script>
+	
+	<shop:ShopView width="100%" height="100%" node="{ node }" />
+</TitleWindowSkin>

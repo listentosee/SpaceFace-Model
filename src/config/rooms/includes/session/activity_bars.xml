@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<ActivityBars>
+		<ActivityBar id="reading" skin="com.dubitplatform.views.ActivityBarView" targetContainer="shopContainer" target="{Rooms.currentRoom.player}" duration="4280" name="Reading...">
+			<Triggers>
+				<OnActivityComplete>
+					<Call behaviourID="mouseOn" scope="{Rooms.currentRoom}"/>
+					<CloseActivityBar activityBar="reading" />
+					<AwardExperiencePoints points="10" />
+					<UpdateAchievementScore score="({Achievements.booksRead.score} + {1})" achievement="{Achievements.booksRead}"/>
+				</OnActivityComplete>
+			</Triggers>
+		</ActivityBar>
+		<ActivityBar id="digging" skin="com.dubitplatform.views.ActivityBarView" targetContainer="shopContainer" target="{Rooms.currentRoom.helper}" duration="4280" track="true" name="Digging...">
+			<Triggers>
+				<onActivityStart>
+					<DesireAction target="{Event.activityBar.targettedObject}" action="helper_dig" />
+				</onActivityStart>
+				<OnActivityComplete>
+					<DesireAction target="{Event.activityBar.targettedObject}" action="helper_stand" />
+					<ShowBubble gameObject="{Rooms.currentRoom.helper}" message="Wooof wooooooof" yOffset="-20"/>
+					<SetValues target="{Rooms.currentRoom.helper}" defaultSpeed="4" />
+					<CloseActivityBar activityBar="digging" />
+				</OnActivityComplete>
+			</Triggers>
+		</ActivityBar>
+		<ActivityBar id="collecting" skin="com.dubitplatform.views.ActivityBarView" targetContainer="shopContainer" target="{Rooms.currentRoom.player}" duration="4280" track="true" offsetY="200" name="Collecting...">
+			<Triggers>
+				<onActivityStart>
+				</onActivityStart>				
+				<OnActivityComplete>
+					<!-- Close the bar -->
+					<CloseActivityBar activityBar="collecting" />
+					<!-- Give the fruit - this works because the fruit and the collection have the same ids, a clever fudge -->
+					<AddToCollection collectionID="fruitCollection" collectableID="{Event.activityBar.targettedGameObject.id}" />				
+					<!-- Show a bubble -->
+					<ShowBubble gameObject="{Rooms.currentRoom.player}" message="Just what I needed for my fruit collection!"/>
+					<!-- Award experience points, and notify the player through the notification system -->
+					<AwardExperiencePoints points="10"/>
+					<CreateNotification title="You just earned 10XP!" body="Congratulations, you just earned 10XP collecting an {Event.activityBar.targettedGameObject.id}. Keep up the good work!" can_remove="true"/>					
+					<!-- Play an animation for finding the experience -->
+					<ShowAwardXPEffect />
+					<!-- Hide the fruit -->
+					<SetValues target="{Event.activityBar.targettedGameObject}" visible="false"/>
+				</OnActivityComplete>
+			</Triggers>
+		</ActivityBar>		
+	</ActivityBars>
+</Include>

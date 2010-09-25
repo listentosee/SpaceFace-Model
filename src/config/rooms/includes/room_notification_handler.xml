@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<!-- Handles behaviours / data sent from the Nexus Game Server to the room -->
+	<NotificationHandler id="world" namespace="world" channel="roomChannel">
+		<!-- Each trigger is a behaviour which is sent from the server -->
+		<Triggers>
+			<!-- Game objects are created / destroyed when players enter / exit rooms -->
+			<createGameObjects><CreateGameObjects gameObjects="{Event.gameObjects}" /></createGameObjects>
+			<createGameObject><CreateGameObject gameObject="{Event.gameObject}" /></createGameObject>
+			<destroyGameObject><DestroyGameObject gameObject="{Event.gameObject}" /></destroyGameObject>
+
+			<!-- Player movement messages -->
+			<moveToPoint>
+				<!-- This behaviour must not notifyServer (as it was the server which notified us about the movement)
+				     Notifying the server here would cause an endless loop scenario -->
+				<MovePlayerTo gameObject="{Event.gameObject}" targetX="{Event.end_x}" targetY="{Event.end_y}" useServer="false"/>
+			</moveToPoint>
+
+			<!-- Player chat messages -->
+			<receiveMessage>
+				<If expression="({Event.gameObject} != {Room.player})">
+					<Then>
+						<!-- This behaviour must not notifyServer (as it was the server which notified us about the message)
+						     Notifying the server here would cause an endless loop scenario -->
+						<ShowChatBubble gameObject="{Event.gameObject}" message="{Event.message}" useServer="false"/>
+					</Then>
+				</If>
+			</receiveMessage>
+
+			<!-- Updates to player game objects send from the server -->
+			<setMemberAttribute>
+				<!-- Only update other player data.  We already know about any changes to our data -->
+				<If expression="({Event.gameObject} != {Room.player})">
+					<Then>
+						<SetValue target="{Event.gameObject}" name="{Event.attributename}" value="{Event.attributevalue}" />
+					</Then>
+				</If>
+			</setMemberAttribute>
+		</Triggers>
+	</NotificationHandler>
+</Include>

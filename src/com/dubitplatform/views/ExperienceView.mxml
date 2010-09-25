@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:ExperienceViewBase 
+	xmlns="uk.co.dubit.platform.components.experience.*"
+	xmlns:ui="uk.co.dubit.platform.components.experience.ui.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="100%">
+	
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.utils.IAttributes;
+			import uk.co.dubit.platform.scriptEngine.node.IScriptNode;
+			import uk.co.dubit.utils.IAttributes;
+			
+			private function updateLevel () : void
+			{
+				if(experience.currentLevel && levelLabel)
+				{
+					levelLabel.text = experience.currentLevel.name + " (" + experience.points + "/" + experience.nextLevel.points + ")";	
+				}
+			}
+		
+			override public function onExperienceAwarded (amountAwarded:int, newPointsAmount:int) : void
+			{
+				updateLevel();
+			}
+			
+			override public function set node(node:IAttributes) : void
+			{
+				super.node = node;
+				
+				updateLevel();
+			}
+		
+		]]>
+	</mx:Script>
+		
+	<mx:HBox width="400">
+		<mx:Label id="levelLabel" width="100%" paddingTop="6" />
+	</mx:HBox>
+	
+</ui:ExperienceViewBase>

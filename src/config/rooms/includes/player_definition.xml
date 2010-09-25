@@ -1,0 +1,38 @@
+<!-- Definition of players in the room -->
+<PlayerDefinition id="playerDefinition"
+	x="{Room.startX}" y="{Room.startY}" 
+	originX="264" originY="600"
+	nameOriginX="0" nameOriginY="0" 
+	mouseEnabled="true" mouseChildren="false" clickThrough="true" useHandCursor="true"
+	clothingLayers="{AvatarEditors.clothingLayers}" 
+	location="furniture.{This.id}" 
+	filters="{Room.playerFilters}" 
+	defaultSpeed="18"
+	culling="false"
+	flip="true"
+	cacheAsBitmap="false"
+	displayObjectClass="com.dubitplatform.game.Avatar"
+	nameBubbleClass="com.dubitplatform.game.CartoonNameBubble" 
+	loaderClass="">
+
+	<Triggers>
+		<onFixup>
+		
+		</onFixup>
+		
+		<onClick>
+			<If expression="({Event.handler} == {Room.player})">
+				<Then><OpenMenu menu="playerMenu" target="{Event.handler}"/></Then>
+				<Else><OpenMenu menu="otherPlayerMenu" target="{Event.handler}"/></Else>
+			</If>
+		</onClick>
+		
+		<onShowAvatarEditor>
+			<OpenAvatarEditor avatarEditor="edit" avatar="{Event.handler}" />
+		</onShowAvatarEditor>
+		
+		<onShowProfile>
+			<OpenProfile profile="playerProfile" avatar="{Event.handler}" />	
+		</onShowProfile>
+	</Triggers>
+</PlayerDefinition>

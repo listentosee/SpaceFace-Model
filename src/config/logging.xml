@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<logging>
+	<logTarget type="mx.logging.targets.TraceTarget" level="WARN" includeDate="false" includeTime="false" includeCategory="true" includeLevel="true" />	
+</logging>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:ComponentViewBase 
+	outputTextColour="#0000FF"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:components="minigameAPI.components.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.platform.components.minigame.client.IMinigameBridge;
+			
+			private static const INFO_LABEL:String = "label";
+			private static const PROPERTY_NAME:String = "propertyName";
+			private static const PROPERTY_DESCRIPTION:String = "description";
+			
+			private static const PLAYER_PROPERTIES:Array = [
+				createPlayerInfoObject("ID", "avatarID", "The ID of the player's avatar"),
+				createPlayerInfoObject("Name", "avatarName", "The name of the player's avatar"),
+				createPlayerInfoObject("Points", "points", "The number of points (Primary currency) the player has"),
+				createPlayerInfoObject("Credits", "credits", "The number of credits (Secondary currency) the player has"),
+				createPlayerInfoObject("Gender", "gender", "The gender of the player's avatar"),
+				createPlayerInfoObject("Clothes", "clothes", "The clothes currenly being worn by the player's avatar") ]
+			
+			private static function createPlayerInfoObject(label:String, propertyName:String, description:String) :  Object
+			{
+				var info:Object = {};
+				
+				info[INFO_LABEL] = label;
+				info[PROPERTY_NAME] = propertyName;
+				info[PROPERTY_DESCRIPTION] = description;
+				
+				return info;
+			}
+			
+			private function onGetPlayerInfoClicked() : void
+			{
+				const selectedInfoObject:Object = playerInfoSelector.selectedItem;
+				
+				const property:String = selectedInfoObject[PROPERTY_NAME];
+				const propertyValue:Object = apiTester.minigameBridge.player[property];
+				
+				outputMessage("Player property '" + property + "' = " + propertyValue);
+			}
+			
+			private function onAwardClicked() : void
+			{
+				const score:Number = gameScore.value;
+				const minigameBridge:IMinigameBridge = apiTester.minigameBridge;
+				
+				minigameBridge.awardGameScore(score);
+				
+				outputMessage("Awarded " + score + " score.  Total score = " + minigameBridge.totalGameScore);
+			}
+			
+			private function onShowTotalClicked() : void
+			{
+				outputMessage("Total game score = " + apiTester.minigameBridge.totalGameScore);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Form width="100%" height="100%">
+		<mx:FormHeading label="Minigame player" />
+		<mx:FormItem label="Get player info:">
+			<mx:HBox width="100%">
+				<mx:ComboBox id="playerInfoSelector" rowCount="6" labelField="label"
+							 dataProvider="{ PLAYER_PROPERTIES }"
+							 change="{ playerInfoSelector.toolTip = playerInfoSelector.selectedItem[PROPERTY_DESCRIPTION] }" />
+				<mx:Button label="Get player info" click="onGetPlayerInfoClicked()" />
+			</mx:HBox>
+		</mx:FormItem>
+		
+		<mx:FormHeading label="Minigame scoring" />
+		
+		<mx:FormItem label="Award game score:">
+			<mx:HBox width="100%">
+				<mx:NumericStepper id="gameScore" minimum="-100" maximum="100" value="50" />
+				<mx:Button label="Award Score" click="onAwardClicked()" />
+			</mx:HBox>
+		</mx:FormItem>
+		
+		<mx:FormItem label="Total game score:">
+			<mx:Button label="Show total" click="onShowTotalClicked()" />
+		</mx:FormItem>
+	</mx:Form>
+	
+</components:ComponentViewBase>

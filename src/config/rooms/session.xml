@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SessionRoom xmlns:xi="http://www.w3.org/2001/XInclude">
+	<xi:include href="includes/session/startup.xml"/>
+	
+	<xi:include href="includes/session/actions.xml"/>
+	<xi:include href="includes/session/achievements.xml"/>
+	<xi:include href="includes/session/activity_bars.xml"/>
+	<xi:include href="includes/session/avatar_editors.xml"/>
+	<xi:include href="includes/session/backpack.xml"/>
+	<xi:include href="includes/session/chat_panels.xml"/>
+	<xi:include href="includes/session/collections.xml"/>
+	<xi:include href="includes/session/experience.xml"/>
+	<xi:include href="includes/session/map.xml"/>
+	<xi:include href="includes/session/menus.xml"/>
+	<xi:include href="includes/session/meters.xml"/>
+	<xi:include href="includes/session/minigames.xml"/>
+	<xi:include href="includes/session/notifications.xml"/>
+	<xi:include href="includes/session/profiles.xml"/>
+	<xi:include href="includes/session/quests.xml"/>
+	<xi:include href="includes/session/quick_chats.xml"/>
+	<xi:include href="includes/session/shops.xml"/>
+	<xi:include href="includes/session/skills.xml"/>	
+	
+	<Triggers>
+		<onFixup>
+		</onFixup>
+	</Triggers>
+</SessionRoom>

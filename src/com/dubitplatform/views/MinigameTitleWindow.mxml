@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TitleWindowSkin
+	width="100%" height="100%" title="{ IMinigame(node).name }"
+	xmlns="uk.co.dubit.platform.components.skin.*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:views="com.dubitplatform.views.*" showCloseButton="true" close="{ IMinigame(node).close() }">
+	
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.platform.components.minigame.IMinigame;
+		]]>
+	</mx:Script>
+	
+	<views:MinigameSkin id="container" width="100%" height="100%" node="{ node }" />
+</TitleWindowSkin> 

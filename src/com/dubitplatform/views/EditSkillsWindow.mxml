@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SkillsViewBase xmlns="uk.co.dubit.platform.components.skills.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="350" height="100%">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			
+			private function close () : void
+			{
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>	
+		
+	<mx:TitleWindow width="100%" height="100%" title="You have {skills.points} skill points left to spend." close="close();" showCloseButton="true">
+		<mx:VBox width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
+			<mx:Repeater id="skillsRepeater" dataProvider="{ skillList }" >
+				<SkillView skill="{skillsRepeater.currentItem as ISkill}"/>
+				<mx:HRule width="100%" visible="{skillsRepeater.currentIndex != skillList.length - 1}"/>		
+			</mx:Repeater>
+		</mx:VBox>
+	</mx:TitleWindow>	
+	
+</SkillsViewBase>

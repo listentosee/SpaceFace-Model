@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<ChatPanels defaultPanel="defaultChatPanel">
+		<ChatPanel id="defaultChatPanel" defaultText="What do you want to say?" skin="com.dubitplatform.views.ChatPanelView" targetContainer="chat" attachSkin="true" />
+		<Triggers>
+			<onSendMessage>
+				<ShowChatBubble gameObject="{Rooms.currentRoom.player}" message="{Event.message}"/>
+			</onSendMessage>
+		</Triggers>
+	</ChatPanels>
+</Include>

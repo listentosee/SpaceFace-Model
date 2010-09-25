@@ -1,0 +1,38 @@
+h1. Dubit Platform Lite
+
+Our goal for the Dubit Platform is to create the easiest and fastest way to create feature rich virtual worlds. We believe that creating a world should not be just a programmers job, and with the right tools a team of creatives can build something special. We'll know when we've done our job when creatives can start creating the content, games, and adventures without the help of programmers. 
+
+h2. Supported Features
+
+The Demo project supports the following core features. Full platform installation includes Admin website, shops, payment gateway integration, customizable avatars, persistence, and more.
+
+* Basic avatars, see assets/avatar directory for example avatar. Full platform supports customizable avatars using Cutout and Layering engines, "find out more":http://dubitplatform.com/blog/2010/3/6/avatars-the-most-important-decision-youll-ever-make.html
+* Multiplayer rooms, with parallax scrolling, depth swapping, lighting effects, collision detection, sound effects, and more.
+* World map.
+* Experience points and levelling .
+* Customizable player skills. Skills can be accessed through the mini game APIs.
+* Backpack for storying items found round the world. Items in the backpack can be combined to make new items.
+* Quests with multiple objectives.
+* Achievements with trophies.
+* Collectables.
+* Mini Game API. The full platform supports the multiplayer game API.
+* Menus shown above the player or objects in the world.
+* Verbs. Custom actions on items in the world, such as looking at, picking up, and talking to.
+* Branching Conversations with non-player characters
+* Chatting. Full platform installation support complex chat filtering.
+* Easy to skin Flex components
+
+h2. Installation
+
+# Checkout the repository 
+# Install the "Flex 3 SDK":http://opensource.adobe.com/wiki/display/flexsdk/Flex+3
+# Set the mxmlc compiler to be available from the command line. 
+## Alternatively change the build.mxmlc property in the build.properties file to point to your mxmlc compiler.
+# Install apache ant - required for build scripts that copy assets and compile the applications.
+# Navigate to the project root directory, likely to be PlatformDemo, and run the build script by typing "ant build" into a terminal window
+## The build task will create the bin directory with the compiled PlatformDemo.swf, index.html, and copy over all required assets.
+## Never edit the bin directory by hand. This is your published directory, all contents will be destroyed and rebuilt by the build script.
+
+h2. Help
+
+We're the first to admit its not that easy to get started... So don't be afraid to get in touch, ask for help, or tell us we're rubbish! Email "matthew.warneford@dubitplatform.com":mailto:matthew.warneford@dubitplatform.com 

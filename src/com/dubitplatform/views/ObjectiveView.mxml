@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjectiveItemViewBase xmlns="uk.co.dubit.platform.components.quest.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	<mx:Label text="{objective.name + (objective.complete ? ' (complete)' : '')}" width="100%" enabled="{objective.complete ? false : true}" />
+</ObjectiveItemViewBase>

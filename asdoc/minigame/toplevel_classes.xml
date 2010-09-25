@@ -1,0 +1,499 @@
+<asdoc build="asd3_0_b2_1">
+   <link rel="stylesheet" href="style.css" type="text/css"/>
+   <packages>
+      <asPackage name="uk.co.dubit.platform.components.minigame.client.multiplayer">
+         <classes>
+            <asClass name="IMultiplayerMinigameClient" type="interface" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameClient" accessLevel="public" isFinal="false" isDynamic="false" packageName="uk.co.dubit.platform.components.minigame.client.multiplayer" path="" relativePath="../" href="" taghref="" inheritDoc="false">
+               <versions/>
+               <author/>
+               <asAncestors/>
+               <fields>
+                  <field name="multiplayerMinigameBridge" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameClient/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameClient:multiplayerMinigameBridge/get" accessLevel="public" isConst="false" isStatic="false" type="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge" inheritDoc="false" only="read-write">
+                     <versions/>
+                     <classRef name="IMultiplayerMinigameBridge" fullName="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge" packageName="uk.co.dubit.platform.components.minigame.client.multiplayer" relativePath="../multiplayer/IMultiplayerMinigameBridge.html"/>
+                  </field>
+               </fields>
+            </asClass>
+            <asClass name="IMultiplayerGameListener" type="interface" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener" accessLevel="public" isFinal="false" isDynamic="false" packageName="uk.co.dubit.platform.components.minigame.client.multiplayer" path="" relativePath="../" href="" taghref="" inheritDoc="false">
+               <versions/>
+               <author/>
+               <asAncestors>
+                  <asAncestor>
+                     <classRef name="uk.co.dubit.event.IListener" fullName="uk.co.dubit.event.IListener" relativePath="none"/>
+                  </asAncestor>
+               </asAncestors>
+               <methods>
+                  <method name="onGameJoinFailed" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener:onGameJoinFailed" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Called if there is an error connecting to the minigame
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Called if there is an error connecting to the minigame
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="message" type="Object"/>
+                     </params>
+                  </method>
+                  <method name="onGameJoined" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener:onGameJoined" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Called when the minigame has successfully connected to the server
+   The delta object contains information relating to users currently in the 
+   minigame
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Called when the minigame has successfully connected to the server
+   The delta object contains information relating to users currently in the 
+   minigame
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                  </method>
+                  <method name="onGameStateUpdated" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener:onGameStateUpdated" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Called when the minigame gamestate was updated by a client
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Called when the minigame gamestate was updated by a client
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="attribute" type="String"/>
+                        <param name="value" type="Object"/>
+                     </params>
+                  </method>
+                  <method name="onMessageReceived" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener:onMessageReceived" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Called when a message is received from the minigame server
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Called when a message is received from the minigame server
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="type" type="String"/>
+                        <param name="message" type="Object"/>
+                     </params>
+                  </method>
+                  <method name="onPlayerEntered" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener:onPlayerEntered" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Called when a player enters the minigame
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Called when a player enters the minigame
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="player" type="Object"/>
+                     </params>
+                  </method>
+                  <method name="onPlayerLeft" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener:onPlayerLeft" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Called when a player leaves the minigame
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Called when a player leaves the minigame
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="player" type="Object"/>
+                     </params>
+                  </method>
+                  <method name="onPlayerStateUpdated" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener:onPlayerStateUpdated" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Called when a minigame player attribute was updated by a client
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Called when a minigame player attribute was updated by a client
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="playerID" type="String"/>
+                        <param name="attribute" type="String"/>
+                        <param name="value" type="Object"/>
+                     </params>
+                  </method>
+               </methods>
+            </asClass>
+            <asClass name="IMultiplayerMinigameBridge" type="interface" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge" accessLevel="public" isFinal="false" isDynamic="false" packageName="uk.co.dubit.platform.components.minigame.client.multiplayer" path="" relativePath="../" href="" taghref="" inheritDoc="false">
+               <versions/>
+               <author/>
+               <asAncestors>
+                  <asAncestor>
+                     <classRef name="IMinigameBridge" fullName="uk.co.dubit.platform.components.minigame.client:IMinigameBridge" packageName="uk.co.dubit.platform.components.minigame.client" relativePath="../IMinigameBridge.html"/>
+                     <fields>
+                        <field name="minigameDataKeys" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:minigameDataKeys/get" accessLevel="public" isConst="false" isStatic="false" type="Array" inheritDoc="false">
+                           <shortDescription><![CDATA[
+   Returns an array of Strings which are the attribute keys on the minigame GAML node.]]></shortDescription>
+                        </field>
+                        <field name="player" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:player/get" accessLevel="public" isConst="false" isStatic="false" type="Object" inheritDoc="false">
+                           <shortDescription><![CDATA[ 
+   The player in the minigame
+   ]]></shortDescription>
+                        </field>
+                     </fields>
+                     <methods>
+                        <method name="closeGame" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:closeGame" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                           <shortDescription><![CDATA[
+   Optional score to set on game close
+   ]]></shortDescription>
+                           <params>
+                              <param name="score" type="int" default="0"/>
+                           </params>
+                        </method>
+                        <method name="dispatchGAMLEvent" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:dispatchGAMLEvent" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                           <shortDescription><![CDATA[
+   Dispatches a GAML event through the current minigame and parent (Minigames) node
+   ]]></shortDescription>
+                           <params>
+                              <param name="eventName" type="String"/>
+                              <param name="arguments" type="Object" default="null"/>
+                           </params>
+                        </method>
+                        <method name="executeGAMLQuery" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:executeGAMLQuery" accessLevel="public" result_type="*" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                           <shortDescription><![CDATA[
+   Executes a GAML query in the current room context
+   ]]></shortDescription>
+                           <params>
+                              <param name="query" type="String"/>
+                           </params>
+                        </method>
+                        <method name="getMinigameData" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:getMinigameData" accessLevel="public" result_type="*" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                           <shortDescription><![CDATA[
+   Returns the value of a given key on the GAML minigame node.]]></shortDescription>
+                           <params>
+                              <param name="key" type="String"/>
+                           </params>
+                        </method>
+                        <method name="setGameScore" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:setGameScore" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                           <shortDescription><![CDATA[
+   Sets the game score onto the minigame GAML node
+   ]]></shortDescription>
+                           <params>
+                              <param name="score" type="int"/>
+                           </params>
+                        </method>
+                     </methods>
+                  </asAncestor>
+                  <asAncestor>
+                     <classRef name="uk.co.dubit.core.IDestructible" fullName="uk.co.dubit.core.IDestructible" relativePath="none"/>
+                  </asAncestor>
+               </asAncestors>
+               <methods>
+                  <method name="joinMinigame" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:joinMinigame" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Starts the connection and joins the multiplayer minigame.  Minigame events will be 
+   fired through the given minigameListener instance
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Starts the connection and joins the multiplayer minigame.]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="minigameListener" type="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener">
+                           <classRef name="IMultiplayerGameListener" fullName="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerGameListener" packageName="uk.co.dubit.platform.components.minigame.client.multiplayer" relativePath="IMultiplayerGameListener.html"/>
+                        </param>
+                     </params>
+                  </method>
+                  <method name="sendMinigameMessage" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:sendMinigameMessage" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Sends a generic message to the minigame server.  If no recipient is specified all people in the 
+   minigame will receive the message
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Sends a generic message to the minigame server.]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="type" type="String"/>
+                        <param name="message" type="Object" default="null"/>
+                        <param name="recipientID" type="String" default="null"/>
+                     </params>
+                  </method>
+                  <method name="updateGameState" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:updateGameState" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Updates the shared gamestate.  Any attribute updated will notify other connected 
+   clients to the change. The value must be a JSON transmittable object - i.e. String, number, boolean, array. 
+   Complex objects will not transmit correctly.
+   For example, this could be called when a 'piece' in a game board is moved
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Updates the shared gamestate.]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="attribute" type="String"/>
+                        <param name="value" type="Object"/>
+                     </params>
+                  </method>
+                  <method name="updatePlayerState" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:updatePlayerState" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Updated a specific player state.  Any attribute updated will notify other connected clients
+   to the change.  The value must be a JSON transmittable object - i.e. String, number, boolean, array. 
+   Complex objects will not transmit correctly.
+   For example, this could be called when players health changes
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Updated a specific player state.]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="playerID" type="String"/>
+                        <param name="attribute" type="String"/>
+                        <param name="value" type="Object"/>
+                     </params>
+                  </method>
+               </methods>
+               <fields>
+                  <field name="connected" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:connected/get" accessLevel="public" isConst="false" isStatic="false" type="Boolean" inheritDoc="false" only="read">
+                     <description><![CDATA[
+   Returns whether the minigame bridge is currently connected to a minigame session
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Returns whether the minigame bridge is currently connected to a minigame session
+   ]]></shortDescription>
+                     <versions/>
+                  </field>
+                  <field name="gameState" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:gameState/get" accessLevel="public" isConst="false" isStatic="false" type="Object" inheritDoc="false" only="read">
+                     <description><![CDATA[
+   Returns the object representing the gamestate.  To update these values,
+   call 'updateGameState' rather than directly changing values.
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Returns the object representing the gamestate.]]></shortDescription>
+                     <versions/>
+                  </field>
+                  <field name="playerCount" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:playerCount/get" accessLevel="public" isConst="false" isStatic="false" type="int" inheritDoc="false" only="read">
+                     <description><![CDATA[
+   Returns the current number of players in the minigame
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Returns the current number of players in the minigame
+   ]]></shortDescription>
+                     <versions/>
+                  </field>
+                  <field name="playerID" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:playerID/get" accessLevel="public" isConst="false" isStatic="false" type="String" inheritDoc="false" only="read">
+                     <description><![CDATA[
+   Returns the ID of your player in the minigame
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Returns the ID of your player in the minigame
+   ]]></shortDescription>
+                     <versions/>
+                  </field>
+                  <field name="players" fullname="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge/uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge:players/get" accessLevel="public" isConst="false" isStatic="false" type="Array" inheritDoc="false" only="read">
+                     <description><![CDATA[
+   Returns the list of players currently in the minigame and their attributes.  To update the attribute values,
+   call 'updateGamePlayer' rather than directly changing values.
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Returns the list of players currently in the minigame and their attributes.]]></shortDescription>
+                     <versions/>
+                  </field>
+               </fields>
+            </asClass>
+         </classes>
+      </asPackage>
+      <asPackage name="uk.co.dubit.platform.components.minigame.client">
+         <classes>
+            <asClass name="IMinigameBridge" type="interface" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge" accessLevel="public" isFinal="false" isDynamic="false" packageName="uk.co.dubit.platform.components.minigame.client" path="" relativePath="../" href="" taghref="" inheritDoc="false">
+               <versions/>
+               <author/>
+               <asDecendants>
+                  <classRef name="IMultiplayerMinigameBridge" fullName="uk.co.dubit.platform.components.minigame.client.multiplayer:IMultiplayerMinigameBridge" packageName="uk.co.dubit.platform.components.minigame.client.multiplayer" relativePath="multiplayer/IMultiplayerMinigameBridge.html"/>
+               </asDecendants>
+               <asAncestors>
+                  <asAncestor>
+                     <classRef name="uk.co.dubit.core.IDestructible" fullName="uk.co.dubit.core.IDestructible" relativePath="none"/>
+                  </asAncestor>
+               </asAncestors>
+               <methods>
+                  <method name="closeGame" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:closeGame" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Optional score to set on game close
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Optional score to set on game close
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="score" type="int" default="0"/>
+                     </params>
+                  </method>
+                  <method name="dispatchGAMLEvent" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:dispatchGAMLEvent" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Dispatches a GAML event through the current minigame and parent (Minigames) node
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Dispatches a GAML event through the current minigame and parent (Minigames) node
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="eventName" type="String"/>
+                        <param name="arguments" type="Object" default="null"/>
+                     </params>
+                  </method>
+                  <method name="executeGAMLQuery" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:executeGAMLQuery" accessLevel="public" result_type="*" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Executes a GAML query in the current room context
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Executes a GAML query in the current room context
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="*"/>
+                     <params>
+                        <param name="query" type="String"/>
+                     </params>
+                  </method>
+                  <method name="getMinigameData" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:getMinigameData" accessLevel="public" result_type="*" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Returns the value of a given key on the GAML minigame node.
+   This function can evaluate nested keys that are delimited by the '.' character
+   E.g.
+   The key "parent.id" will evaluate first the parent of the minigame node, and then its id
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Returns the value of a given key on the GAML minigame node.]]></shortDescription>
+                     <versions/>
+                     <result type="*"/>
+                     <params>
+                        <param name="key" type="String"/>
+                     </params>
+                  </method>
+                  <method name="setGameScore" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:setGameScore" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Sets the game score onto the minigame GAML node
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Sets the game score onto the minigame GAML node
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                     <params>
+                        <param name="score" type="int"/>
+                     </params>
+                  </method>
+               </methods>
+               <fields>
+                  <field name="minigameDataKeys" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:minigameDataKeys/get" accessLevel="public" isConst="false" isStatic="false" type="Array" inheritDoc="false" only="read">
+                     <description><![CDATA[
+   Returns an array of Strings which are the attribute keys on the minigame GAML node.
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Returns an array of Strings which are the attribute keys on the minigame GAML node.]]></shortDescription>
+                     <versions/>
+                  </field>
+                  <field name="player" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameBridge/uk.co.dubit.platform.components.minigame.client:IMinigameBridge:player/get" accessLevel="public" isConst="false" isStatic="false" type="Object" inheritDoc="false" only="read">
+                     <description><![CDATA[ 
+   The player in the minigame
+   ]]></description>
+                     <shortDescription><![CDATA[ 
+   The player in the minigame
+   ]]></shortDescription>
+                     <versions/>
+                  </field>
+               </fields>
+            </asClass>
+            <asClass name="IMinigameClient" type="interface" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameClient" accessLevel="public" isFinal="false" isDynamic="false" packageName="uk.co.dubit.platform.components.minigame.client" path="" relativePath="../" href="" taghref="" inheritDoc="false">
+               <versions/>
+               <author/>
+               <asAncestors/>
+               <fields>
+                  <field name="minigameBridge" fullname="uk.co.dubit.platform.components.minigame.client:IMinigameClient/uk.co.dubit.platform.components.minigame.client:IMinigameClient:minigameBridge/get" accessLevel="public" isConst="false" isStatic="false" type="uk.co.dubit.platform.components.minigame.client:IMinigameBridge" inheritDoc="false" only="read-write">
+                     <versions/>
+                     <classRef name="IMinigameBridge" fullName="uk.co.dubit.platform.components.minigame.client:IMinigameBridge" packageName="uk.co.dubit.platform.components.minigame.client" relativePath="../client/IMinigameBridge.html"/>
+                  </field>
+               </fields>
+            </asClass>
+         </classes>
+      </asPackage>
+      <asPackage name="uk.co.dubit.platform.components.minigame">
+         <classes>
+            <asClass name="IMultiplayerMinigame" type="interface" fullname="uk.co.dubit.platform.components.minigame:IMultiplayerMinigame" accessLevel="public" isFinal="false" isDynamic="false" packageName="uk.co.dubit.platform.components.minigame" path="" relativePath="../" href="" taghref="" inheritDoc="false">
+               <versions/>
+               <author/>
+               <asAncestors>
+                  <asAncestor>
+                     <classRef name="IMinigame" fullName="uk.co.dubit.platform.components.minigame:IMinigame" packageName="uk.co.dubit.platform.components.minigame" relativePath="IMinigame.html"/>
+                     <fields>
+                        <field name="gameURL" fullname="uk.co.dubit.platform.components.minigame:IMinigame/uk.co.dubit.platform.components.minigame:IMinigame:gameURL/get" accessLevel="public" isConst="false" isStatic="false" type="String" inheritDoc="false">
+                           <shortDescription><![CDATA[
+   URL to the SWF minigame
+   ]]></shortDescription>
+                        </field>
+                        <field name="name" fullname="uk.co.dubit.platform.components.minigame:IMinigame/uk.co.dubit.platform.components.minigame:IMinigame:name/get" accessLevel="public" isConst="false" isStatic="false" type="String" inheritDoc="false"/>
+                        <field name="score" fullname="uk.co.dubit.platform.components.minigame:IMinigame/uk.co.dubit.platform.components.minigame:IMinigame:score/get" accessLevel="public" isConst="false" isStatic="false" type="int" inheritDoc="false"/>
+                     </fields>
+                  </asAncestor>
+                  <asAncestor>
+                     <classRef name="uk.co.dubit.platform.scriptEngine.gameObject.ISkinnedGameObject" fullName="uk.co.dubit.platform.scriptEngine.gameObject.ISkinnedGameObject" relativePath="none"/>
+                  </asAncestor>
+               </asAncestors>
+               <methods>
+                  <method name="requestInstantMatch" fullname="uk.co.dubit.platform.components.minigame:IMultiplayerMinigame/uk.co.dubit.platform.components.minigame:IMultiplayerMinigame:requestInstantMatch" accessLevel="public" result_type="void" isFinal="false" isOverride="false" isStatic="false" inheritDoc="false">
+                     <description><![CDATA[
+   Dispatches a minigame event to be handled with GAML
+   ]]></description>
+                     <shortDescription><![CDATA[
+   Dispatches a minigame event to be handled with GAML
+   ]]></shortDescription>
+                     <versions/>
+                     <result type="void"/>
+                  </method>
+               </methods>
+               <fields>
+                  <field name="gameToken" fullname="uk.co.dubit.platform.components.minigame:IMultiplayerMinigame/uk.co.dubit.platform.components.minigame:IMultiplayerMinigame:gameToken/get" accessLevel="public" isConst="false" isStatic="false" type="String" inheritDoc="false" only="read-write">
+                     <description><![CDATA[
+   A unique token set when a user is invited to join a minigame
+   The token defines a unique game session and is produced by the NexusGameServer
+   ]]></description>
+                     <shortDescription><![CDATA[
+   A unique token set when a user is invited to join a minigame
+   The token defines a unique game session and is produced by the NexusGameServer
+   ]]></shortDescription>
+                     <versions/>
+                  </field>
+               </fields>
+            </asClass>
+            <asClass name="IMinigame" type="interface" fullname="uk.co.dubit.platform.components.minigame:IMinigame" accessLevel="public" isFinal="false" isDynamic="false" packageName="uk.co.dubit.platform.components.minigame" path="" relativePath="../" href="" taghref="" inheritDoc="false">
+               <versions/>
+               <author/>
+               <asDecendants>
+                  <classRef name="IMultiplayerMinigame" fullName="uk.co.dubit.platform.components.minigame:IMultiplayerMinigame" packageName="uk.co.dubit.platform.components.minigame" relativePath="../minigame/IMultiplayerMinigame.html"/>
+               </asDecendants>
+               <asAncestors>
+                  <asAncestor>
+                     <classRef name="uk.co.dubit.platform.scriptEngine.gameObject.ISkinnedGameObject" fullName="uk.co.dubit.platform.scriptEngine.gameObject.ISkinnedGameObject" relativePath="none"/>
+                  </asAncestor>
+               </asAncestors>
+               <fields>
+                  <field name="gameURL" fullname="uk.co.dubit.platform.components.minigame:IMinigame/uk.co.dubit.platform.components.minigame:IMinigame:gameURL/get" accessLevel="public" isConst="false" isStatic="false" type="String" inheritDoc="false" only="read">
+                     <description><![CDATA[
+   URL to the SWF minigame
+   ]]></description>
+                     <shortDescription><![CDATA[
+   URL to the SWF minigame
+   ]]></shortDescription>
+                     <versions/>
+                  </field>
+                  <field name="name" fullname="uk.co.dubit.platform.components.minigame:IMinigame/uk.co.dubit.platform.components.minigame:IMinigame:name/get" accessLevel="public" isConst="false" isStatic="false" type="String" inheritDoc="false" only="read">
+                     <versions/>
+                  </field>
+                  <field name="score" fullname="uk.co.dubit.platform.components.minigame:IMinigame/uk.co.dubit.platform.components.minigame:IMinigame:score/get" accessLevel="public" isConst="false" isStatic="false" type="int" inheritDoc="false" only="read-write">
+                     <versions/>
+                  </field>
+               </fields>
+            </asClass>
+         </classes>
+      </asPackage>
+   </packages>
+</asdoc>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:ComponentViewBase 
+	outputTextColour="#FF0000"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:components="minigameAPI.components.*">
+	
+	<mx:Script>
+		<![CDATA[
+						
+			private var _minigameConnected:Boolean = false;
+			
+			[Bindable]
+			public function get minigameConnected() : Boolean
+			{
+				return _minigameConnected;
+			}
+			
+			public function set minigameConnected(value:Boolean) : void
+			{
+				_minigameConnected = value;
+				
+				disconnectButton.enabled = minigameConnected;
+				connectButton.enabled = !minigameConnected;
+			}
+		
+			private function onConnectClicked() : void
+			{
+				connectButton.enabled = false;
+				
+				outputMessage("Connecting to minigame server...");
+				apiTester.multiplayerMinigameBridge.joinMinigame(apiTester);
+			}
+			
+			private function onDisconnectClicked() : void
+			{
+				disconnectButton.enabled = false;
+				minigameConnected = false;
+				
+				apiTester.multiplayerMinigameBridge.leaveGame();
+				outputMessage("Disconnected from minigame server");
+				
+				connectButton.enabled = true;
+				
+				refeshPlayerList();
+			}
+			
+			public function refeshPlayerList() : void
+			{
+				connectedPlayers.dataProvider = apiTester.multiplayerMinigameBridge.players;
+				
+				printPlayerCount();
+			}
+			
+			private function printPlayerCount() : void
+			{
+				const playerCount:int = apiTester.multiplayerMinigameBridge.playerCount;
+				const plural:Boolean = playerCount > 1;
+				
+				outputMessage(
+					"There " + (plural ? "are" : "is") + " currently " + playerCount + " player" + (plural ? "s" : "") + " connected");
+			}
+			
+			private function onSendMessageClicked() : void
+			{
+				const messageType:String = messageTypeInput.text;
+				const message:Object = { "message": messageDataInput.text, "otherArgs": [1,2,3] };
+				
+				apiTester.multiplayerMinigameBridge.sendMinigameMessage(messageType, message);
+				
+				outputMessage("Send multiplayer game message to connected clients");
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Form width="100%" height="100%">
+		<mx:FormHeading label="Multiplayer Minigame" visible="{ enabled }" />
+		
+		<mx:FormItem label="Connection:">
+			<mx:HBox width="100%">
+				<mx:Button id="connectButton" label="Connect" click="onConnectClicked()" />
+				<mx:Button id="disconnectButton" label="Disconnect" click="onDisconnectClicked()" enabled="false" />
+			</mx:HBox>
+		</mx:FormItem>
+		
+		<mx:FormHeading label="Player data" />
+		
+		<mx:FormItem label="Connected players:" enabled="{ minigameConnected }">
+			<mx:ComboBox id="connectedPlayers" dataProvider="{ apiTester.multiplayerMinigameBridge.players }" labelField="avatarName" />
+		</mx:FormItem>
+		
+		<mx:FormHeading label="Multiplayer messages" />
+		
+		<mx:FormItem label="Send message:" enabled="{ minigameConnected }">
+			<mx:VBox width="100%" horizontalAlign="right">
+				<mx:FormItem label="Type">
+					<mx:TextInput id="messageTypeInput" />
+				</mx:FormItem>
+				
+				<mx:FormItem label="Message">
+					<mx:TextInput id="messageDataInput" />
+				</mx:FormItem>
+				
+				<mx:Button label="Send message" click="onSendMessageClicked()"/>
+			</mx:VBox>
+		</mx:FormItem>
+	</mx:Form>
+	
+	<mx:Label horizontalCenter="0" verticalCenter="0" text="No multiplayer minigame bridge" fontSize="20" color="red" visible="{ !enabled }" />
+</components:ComponentViewBase>

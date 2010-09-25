@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NotificationViewBase 
+	xmlns="uk.co.dubit.platform.components.notifications.ui.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:VBox verticalAlign="middle" width="100%" horizontalGap="0" paddingLeft="5" paddingRight="5">
+		<mx:Label text="{ notification.title}" fontWeight="bold" />
+		<mx:Text text="{ notification.body }" width="100%" height="30" selectable="false" />
+		
+		<mx:HBox width="100%" horizontalAlign="right">
+			<mx:Button label="Accept" visible="{ notification.canAccept() }" includeInLayout="{ notification.canAccept() }" click="{ notification.accept() }" />
+			<mx:Button label="Reject" visible="{ notification.canReject() }" includeInLayout="{ notification.canReject() }" click="{ notification.reject() }" />
+			<mx:Button label="Remove" visible="{ notification.canRemove() }" includeInLayout="{ notification.canRemove() }" click="{ notification.remove() }" />
+		</mx:HBox>
+	</mx:VBox>
+</NotificationViewBase>

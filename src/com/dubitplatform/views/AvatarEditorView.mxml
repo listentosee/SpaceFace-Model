@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:AvatarEditorSkinViewBase 
+	width="100%" height="100%"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ui="uk.co.dubit.platform.components.avatarEditor.ui.*" 
+	xmlns:avatarEditor="com.dubitplatform.views.avatarEditor.*" 
+	xmlns:editor="uk.co.dubit.platform.components.avatar.editor.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.CollectionEvent;
+			import mx.events.ItemClickEvent;
+			
+			import uk.co.dubit.platform.components.avatarEditor.IAvatarEditor;
+			import uk.co.dubit.platform.components.catalogue.IProductGroup;
+			import uk.co.dubit.platform.components.catalogue.ui.ProductGroupLoadMode;
+			
+			[Bindable]
+			override public function set avatarEditor(value:IAvatarEditor) : void
+			{
+				super.avatarEditor = value;
+				
+				if(avatarEditor)
+				{
+					avatarPreview.actionID = "stand_front_" + avatarEditor.avatar.gender.toLowerCase();
+					avatarPreview.avatar = avatarEditor.avatar;
+				}
+			}
+			
+			private function resetAvatar() : void
+			{
+				avatarEditor.resetAvatar();
+				
+				avatarPreview.avatar = avatarEditor.avatar;
+				avatarPreview.loadPose();
+			}
+			
+			private function onProductGroupClicked(e:ItemClickEvent) : void
+			{				
+				productGroupView.productGroup = IProductGroup(e.item);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:TitleWindow title="Avatar customizer" 
+					width="100%" height="100%" 
+					showCloseButton="true" close="{ avatarEditor.close() }">
+		
+		<mx:Canvas width="100%" height="100%">
+			<mx:HBox width="100%" height="100%">
+				<mx:Form>
+					<mx:FormHeading label="Avatar Preview" />
+					<mx:FormItem>
+						<mx:VBox>
+							<editor:TintablePose id="avatarPreview"
+												 width="400" height="600"
+												 scaleX="0.4" scaleY="0.4" />
+							<mx:HBox width="100%" paddingLeft="10">
+								<mx:Button label="Save appearance" click="{ avatarEditor.saveAvatar() }" />
+								<mx:Button label="Reset" click="resetAvatar()" />
+							</mx:HBox>
+							
+						</mx:VBox>
+						
+					</mx:FormItem>
+				</mx:Form>
+				
+				<mx:Form width="100%" height="100%">
+					<mx:FormHeading label="Clothing Categories" />
+					<mx:FormItem width="100%" height="100%">
+						<mx:VBox width="100%" height="100%">
+							<mx:TabBar dataProvider="{ avatarEditor.productGroups }"
+									   labelField="name"
+									   itemClick="onProductGroupClicked(event)" />
+							
+							<avatarEditor:AvatarEditorProductGroupView id="productGroupView" 
+																	   width="100%" height="100%"
+																	   avatar="{ avatarEditor.avatar }"
+																	   loadMode="{ ProductGroupLoadMode.OWNED }"
+																	   productGroup="{ avatarEditor.selectedProductGroup }"
+																	   clothingChanged="{ avatarPreview.loadPose() }" />
+						</mx:VBox>
+					</mx:FormItem>
+				</mx:Form>	
+			</mx:HBox>	
+		</mx:Canvas>
+	</mx:TitleWindow> 
+</ui:AvatarEditorSkinViewBase>

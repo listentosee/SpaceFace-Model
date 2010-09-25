@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.platform.components.notifications.Notifications;
+			import uk.co.dubit.platform.components.notifications.INotifications;
+			
+			private var notifications:INotifications = Notifications.getInstance();
+		]]>
+	</mx:Script>
+	
+	<mx:List id="notificationsList" width="100%" height="100%" useRollOver="false"
+		dataProvider="{ notifications.notifications }" itemRenderer="{ new ClassFactory(NotificationView) }" />	
+</mx:Canvas>

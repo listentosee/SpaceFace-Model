@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ComponentViewBase 
+	outputTextColour="#00FFFF"
+	xmlns="minigameAPI.components.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml">		
+	
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.platform.components.minigame.client.IMinigameBridge;
+			
+			private static const NODE_HANDLER:String = "Minigame Node";
+			private static const ROOM_HANDLER:String = "Current Room";
+			private static const SESSION_HANDLER:String = "Session";
+			
+			private function onDispatchEventClicked() : void
+			{
+				const eventName:String = eventNameInput.text;
+				const bridge:IMinigameBridge = apiTester.minigameBridge;
+				const exampleEventData:Object = { "openSecretPassage": true }
+
+				switch(handler.selectedItem)
+				{
+					case NODE_HANDLER :
+						bridge.dispatchGAMLEvent(eventName, exampleEventData);
+						break;
+					
+					case ROOM_HANDLER :
+						bridge.dispatchGAMLRoomEvent(eventName, exampleEventData);
+						break;
+					
+					case SESSION_HANDLER :
+						bridge.dispatchGAMLSessionEvent(eventName, exampleEventData);
+						break;
+				}
+				
+				outputMessage("Dispatched GAML event (" + eventName + ")");
+			}
+		]]>
+	</mx:Script>
+	<mx:Form width="100%" height="100%">
+		<mx:FormHeading label="Dispatch GAML Event"/>
+		
+		<mx:FormItem label="Event name:">
+			<mx:TextInput id="eventNameInput" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="Select handler:">
+			<mx:ComboBox id="handler" dataProvider="{ [ NODE_HANDLER, ROOM_HANDLER, SESSION_HANDLER ] }"  />
+		</mx:FormItem>
+		
+		<mx:FormItem>
+			<mx:Button label="Dispatch event" click="onDispatchEventClicked()" />
+		</mx:FormItem>
+	</mx:Form>
+</ComponentViewBase>

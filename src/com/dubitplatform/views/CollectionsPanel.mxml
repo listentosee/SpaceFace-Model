@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:backpack="uk.co.dubit.platform.components.backpack.*" xmlns:quest="uk.co.dubit.platform.components.quest.*" layout="absolute" width="350" height="450" title="My Collections" showCloseButton="true" close="closeWindow()" creationComplete="closeWindow()" xmlns:views="com.dubitplatform.views.*" xmlns:map="uk.co.dubit.platform.components.map.*" xmlns:achievements="uk.co.dubit.platform.components.achievements.*" xmlns:collections="uk.co.dubit.platform.components.collections.*">
+	
+	<mx:Script>
+        <![CDATA[
+            
+            public function closeWindow():void
+            {
+            	visible = false
+            }
+            
+       ]]>
+       
+	</mx:Script>
+	
+	<collections:CollectionsSkinContainer width="100%" height="100%"/>
+
+</mx:TitleWindow>

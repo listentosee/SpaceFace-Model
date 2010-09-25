@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QuickChatWordViewBase
+	xmlns="uk.co.dubit.platform.components.chat.quickChat.ui.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.core.SoundAsset;
+			import mx.core.UIComponent;
+			import uk.co.dubit.platform.components.rooms.RoomModel;
+			import mx.events.ListEvent;
+			import uk.co.dubit.platform.components.chat.quickChat.IQuickChatWord;
+			import mx.controls.listClasses.ListBase;
+			
+			[Bindable]
+			private var text:String;
+			
+			[Bindable]
+			private var selected:Boolean = false;
+			
+			private var timer:Timer;
+			
+			private var hitAreaComponent:UIComponent;
+			
+			override public function set quickChatWord(value:IQuickChatWord):void
+			{
+				super.quickChatWord = value;
+				
+				if(quickChatWord) text = quickChatWord.text
+			}
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				
+				selected = ListBase(owner).isItemSelected(data);
+			}
+			
+			private function showSubMenu():void
+			{
+				if (quickChatWord.children.length > 0)
+				{
+					ListBase(owner).selectedItem = data; 
+					var event:ListEvent = new ListEvent(Event.CHANGE, true, false, -1, -1, null, this);
+					
+					dispatchEvent(event);
+				}
+			}
+			
+			
+			private function showHitArea(component:UIComponent):void
+			{
+				hitAreaComponent = component;
+				timer = new Timer (6, 10);
+				timer.addEventListener(TimerEvent.TIMER, fadeInHitArea);
+				timer.start(); 
+			}
+			
+			private function fadeInHitArea(e:TimerEvent):void
+			{
+				hitAreaComponent.alpha += 0.02;
+			}
+			
+			private function hideHitArea(component:UIComponent):void
+			{
+				selected = false;
+				timer.stop();
+				timer.removeEventListener(TimerEvent.TIMER, fadeInHitArea);
+				component.alpha = 0;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Label
+		text="{ text }" 
+		fontWeight="{ selected ? 'bold' : 'normal' }" 
+		fontFamily="caslon" fontSize="14"
+		mouseChildren="true"
+		maxWidth="143"
+		truncateToFit="true"/>
+	
+	<mx:Canvas id="quickChatItem" width="82%" height="100%" 
+			   click="showSubMenu()"
+			   mouseOver="showHitArea(quickChatItem)" mouseOut="hideHitArea(quickChatItem)" 
+			   cornerRadius="2" borderStyle="solid" borderColor="black" borderThickness="0"
+			   backgroundColor="black" backgroundAlpha="0.5" alpha="0"
+			   buttonMode="true" useHandCursor="true"/>
+	
+</QuickChatWordViewBase>

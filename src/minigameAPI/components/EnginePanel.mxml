@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ComponentViewBase 
+	outputTextColour="#FF00FF"
+	xmlns="minigameAPI.components.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[			
+			private static const QUERY:String = "query";
+			private static const DESCRIPTION:String = "description";
+			
+			private static const EXAMPLE_QUERIES:Array = [
+				createExampleQuery("{Experience.points}", "The number of experience points owned by the player"),
+				createExampleQuery("{Experience.currentLevel.name}", "The name of the current experience lavel"),
+				createExampleQuery("{Backpack.has.mySpecialItem}", "Returns whether the user has collected 'mySpecialItem'"),
+				createExampleQuery("{Session.logonTime}", "Time the player logged into the world"),
+				createExampleQuery("{Session.serverTime}", "The current time on the Nexus Game Server"),
+				createExampleQuery("{Session.user.userName}", "The username of the player")]
+				
+			private static function createExampleQuery(query:String, description:String) : Object
+			{
+				const queryObject:Object = {};
+				
+				queryObject[QUERY] = query;
+				queryObject[DESCRIPTION] = description;
+				
+				return queryObject;
+			}
+			
+			private function printMinigameData() : void
+			{
+				const selectedKey:String = nodeKeys.selectedItem as String;
+				
+				outputMessage(
+					"Node data for '" + selectedKey + "' = " + apiTester.minigameBridge.getNodeData(selectedKey));
+			}
+			
+			private function runGAMLQuery(query:String) : void
+			{
+				const queryResult:Object = apiTester.minigameBridge.executeGAMLQuery(query);
+				
+				outputMessage("GAML Query (" + query + ") = " + queryResult);
+			}
+		]]>
+	</mx:Script>
+	<mx:Form width="100%" height="100%">
+		<mx:FormHeading label="Access GAML Engine"/>
+		
+		<mx:FormItem label="Get minigame data">
+			<mx:HBox width="100%">
+				<mx:ComboBox id="nodeKeys" dataProvider="{ apiTester.minigameBridge.getNodeDataKeys() }" />
+				<mx:Button label="Get data" click="printMinigameData()" />
+			</mx:HBox>
+		</mx:FormItem>
+		
+		<mx:FormItem label="GAML Query">
+			<mx:HBox width="100%">
+				<mx:TextInput id="queryInput" width="100%" />
+				<mx:Button label="Run query" click="{ runGAMLQuery(queryInput.text) }" />
+			</mx:HBox>
+		</mx:FormItem>
+		
+		<mx:FormItem label="Query examples:">
+			<mx:VBox width="100%" horizontalAlign="right">
+				<mx:ComboBox id="exampleQuerySelector" dataProvider="{ EXAMPLE_QUERIES }" labelField="{ QUERY }" 
+							 toolTip="{ exampleQuerySelector.selectedItem[DESCRIPTION] }" />
+				<mx:Button label="Run example query" click="{ runGAMLQuery(exampleQuerySelector.selectedItem[QUERY]) }" />
+			</mx:VBox>
+		</mx:FormItem>
+	</mx:Form>
+</ComponentViewBase>

@@ -1,0 +1,125 @@
+<Action id="stand_front_female" facing="01" gender="female" priority="1" frameRate="24" frames="1" loadAssets="false" className="uk.co.dubit.graphics.render2D.actions.DirectionalStand">
+  <layer id="skin_crotch" path="front/skin_crotch.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="257.79" ty="304.73"/>
+  </layer>
+  <layer id="skin_wings" path="front/skin_wings.swf">
+    <frame a="1.11" b="0" c="0" d="1.08" tx="259.94" ty="36.93"/>
+  </layer>
+  <layer id="hair_back" path="front/hair_back.swf">
+    <frame a="1.11" b="-0.03" c="0" d="1.09" tx="192.18" ty="69.71"/>
+  </layer>
+  <layer id="skin_lowerlegleft" path="front/skin_lowerlegleft.swf">
+    <frame a="-1.1" b="0.03" c="0.04" d="1.35" tx="301.79" ty="432.49"/>
+  </layer>
+  <layer id="skin_upperlegleft" path="front/skin_upperlegleft.swf">
+    <frame a="-1.09" b="0.11" c="0.15" d="1.36" tx="291.28" ty="321.12"/>
+  </layer>
+  <layer id="skin_lowerlegright" path="front/skin_lowerlegright.swf">
+    <frame a="1.1" b="-0.06" c="0.08" d="1.29" tx="219.46" ty="430.4"/>
+  </layer>
+  <layer id="skin_upperlegright" path="front/skin_upperlegright.swf">
+    <frame a="1.21" b="0.04" c="-0.05" d="1.36" tx="221.55" ty="318.92"/>
+  </layer>
+  <layer id="skin_footleft" path="front/skin_footleft.swf">
+    <frame a="-0.84" b="-0.07" c="-0.39" d="1.37" tx="325.22" ty="544.91"/>
+  </layer>
+  <layer id="skin_footright" path="front/skin_footright.swf">
+    <frame a="0.79" b="-0.16" c="0.39" d="1.4" tx="206.92" ty="542.71"/>
+  </layer>
+  <layer id="bottoms_lowerlegleft" path="front/bottoms_lowerlegleft.swf">
+    <frame a="1.09" b="-0.16" c="0.2" d="1.35" tx="268.74" ty="412.69"/>
+  </layer>
+  <layer id="bottoms_upperlegleft" path="front/bottoms_upperlegleft.swf">
+    <frame a="0.97" b="-0.15" c="0.17" d="1.17" tx="254.38" ty="317.43"/>
+  </layer>
+  <layer id="bottoms_lowerlegright" path="front/bottoms_lowerlegright.swf">
+    <frame a="1.09" b="-0.19" c="0.06" d="1.32" tx="214.07" ty="413.96"/>
+  </layer>
+  <layer id="bottoms_upperlegright" path="front/bottoms_upperlegright.swf">
+    <frame a="1.06" b="-0.21" c="0.05" d="1.12" tx="206.7" ty="318.26"/>
+  </layer>
+  <layer id="bottoms_top" path="front/bottoms_top.swf">
+    <frame a="1.08" b="0.13" c="-0.07" d="1.09" tx="222.92" ty="272.33"/>
+  </layer>
+  <layer id="boot_right" path="front/boot_right.swf">
+    <frame a="1.1" b="-0.03" c="0.05" d="1.02" tx="187.01" ty="495.74"/>
+  </layer>
+  <layer id="boot_left" path="front/boot_left.swf">
+    <frame a="-1.13" b="0.05" c="-0.03" d="1.02" tx="343.65" ty="494.48"/>
+  </layer>
+  <layer id="skin_belly" path="front/skin_belly.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="230.68" ty="222.67"/>
+  </layer>
+  <layer id="skin_chest" path="front/skin_chest.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="214.51" ty="156.17"/>
+  </layer>
+  <layer id="top_lowertorso" path="front/top_lowertorso.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="138" ty="258.25"/>
+  </layer>
+  <layer id="top_middletorso" path="front/top_middletorso.swf">
+    <frame a="1.11" b="0" c="0" d="1.1" tx="219.13" ty="212.05"/>
+  </layer>
+  <layer id="top_uppertorso" path="front/top_uppertorso.swf">
+    <frame a="1.11" b="0" c="0" d="1.1" tx="208.9" ty="149.46"/>
+  </layer>
+  <layer id="skin_lowerarmleft" path="front/skin_lowerarmleft.swf">
+    <frame a="-1.1" b="0.06" c="0.06" d="1.1" tx="320.16" ty="252.48"/>
+  </layer>
+  <layer id="skin_upperarmleft" path="front/skin_upperarmleft.swf">
+    <frame a="-1.07" b="0.23" c="0.23" d="1.07" tx="304.27" ty="176.19"/>
+  </layer>
+  <layer id="skin_lowerarmright" path="front/skin_lowerarmright.swf">
+    <frame a="1.15" b="0.1" c="-0.09" d="1.1" tx="186.35" ty="257.54"/>
+  </layer>
+  <layer id="skin_upperarmright" path="front/skin_upperarmright.swf">
+    <frame a="1.06" b="0.27" c="-0.29" d="1.02" tx="206.75" ty="180.92"/>
+  </layer>
+  <layer id="skin_handleft" path="front/skin_handleft.swf">
+    <frame a="-1.2" b="-0.07" c="-0.07" d="1.13" tx="334.63" ty="330.8"/>
+  </layer>
+  <layer id="skin_handright" path="front/skin_handright.swf">
+    <frame a="1.12" b="-0.25" c="0.25" d="1.12" tx="171.06" ty="337.62"/>
+  </layer>
+  <layer id="top_lowerarmleft" path="front/top_lowerarmleft.swf">
+    <frame a="-1.09" b="0.01" c="0.02" d="1.38" tx="326.32" ty="251.49"/>
+  </layer>
+  <layer id="top_upperarmleft" path="front/top_upperarmleft.swf">
+    <frame a="1.08" b="-0.21" c="0.22" d="1.11" tx="284.52" ty="173.33"/>
+  </layer>
+  <layer id="top_lowerarmright" path="front/top_lowerarmright.swf">
+    <frame a="-1.28" b="-0.14" c="-0.14" d="1.3" tx="210.27" ty="257.43"/>
+  </layer>
+  <layer id="top_upperarmright" path="front/top_upperarmright.swf">
+    <frame a="1.04" b="0.33" c="-0.34" d="1.07" tx="208.84" ty="176.25"/>
+  </layer>
+  <layer id="skin_neck" path="front/skin_neck.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="238.6" ty="138.46"/>
+  </layer>
+  <layer id="accessories_collar" path="front/accessories_collar.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="231.78" ty="147.87"/>
+  </layer>
+  <layer id="ear_left" path="front/ear_left.swf">
+    <frame a="0.53" b="-0.03" c="0" d="0.53" tx="280.18" ty="99.69"/>
+  </layer>
+  <layer id="ear_right" path="front/ear_right.swf">
+    <frame a="0.53" b="0.01" c="0.02" d="0.53" tx="174.58" ty="100.46"/>
+  </layer>
+  <layer id="skin_face" path="front/skin_face.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="208.46" ty="38.36"/>
+  </layer>
+  <layer id="mouth_mouth" path="front/mouth_mouth.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="237.61" ty="127.46"/>
+  </layer>
+  <layer id="nose_nose" path="front/nose_nose.swf">
+    <frame a="1.1" b="0" c="0" d="1.1" tx="242.5" ty="113.33"/>
+  </layer>
+  <layer id="eye_right" path="front/eye_right.swf">
+    <frame a="1.25" b="0" c="0" d="1.44" tx="212.8" ty="85.83"/>
+  </layer>
+  <layer id="eye_left" path="front/eye_left.swf">
+    <frame a="1.25" b="0" c="0" d="1.44" tx="258.23" ty="82.64"/>
+  </layer>
+  <layer id="hair_front" path="front/hair_front.swf">
+    <frame a="1.13" b="0" c="0" d="1.12" tx="195.15" ty="30"/>
+  </layer>
+</Action>

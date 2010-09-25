@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<DisplayObjectDefinition id="cd_collectable"
+		name="CD" tooltip="CD"
+		clickThrough="true" verbEnabled="true" mouseEnabled="true"
+		displayObjectClass="uk.co.dubit.graphics.render2D.DisplayObject2D">
+				
+		<Triggers>
+			<OnLookAt>
+				<ShowBubble gameObject="{Room.player}" message="It's a CD full of sensitive data"  useServer="false"/>
+			</OnLookAt>	
+			<OnPickUp>
+				<MoveTo gameObject="{Room.player}" x="{Room.player.x}" y="{Room.player.y}" targetX="{Event.handler.x}" targetY="{Event.handler.y}">
+					<Complete>
+						<ShowBubble gameObject="{Room.player}" message="I'd better take this" useServer="false"/>
+						<SetValues target="{Event.handler}" visible="false"/>
+						<ForEach in="{Collections.cdCollection.children}">
+							<If expression="({Event.iteration.id} == {Event.handler.id})">
+								<Then>
+									<AddToCollection collectionID="cdCollection" collectableID="{Event.handler.id}" />
+									<SetValues target="{Event.iteration}" quantity="1" delay="1000" />
+								</Then>	
+							</If>
+						</ForEach>
+					</Complete>
+				</MoveTo>
+			</OnPickUp>
+				
+			<onFixup>			
+				<!-- Loop through all the collectable objects -->
+				<ForEach in="{Collections.cdCollection.children}">
+					<SetValues target="{Event}" collectable="{Event.iteration}" displayObject=""/>
+				
+					<!-- Find corresponding displayObject in the room -->
+					<ForEach in="{Room.renderObjects}">
+						<If expression="({Event.iteration.id} == {Event.collectable.id})">
+							<Then>
+								<!-- Found the display object -->
+								<Setvalues target="{Event}" displayObject="{Event.iteration}"/>
+								
+								<!-- Decide whether to hide the display object -->
+								<If expression="({Event.collectable.quantity} >= {1})">
+									<Then>
+										<!-- We have collected it already, so hide! -->
+										<SetValues target="{Event.displayObject}" visible="false" />
+									</Then>
+								</If>
+							</Then>
+						</If>
+					</ForEach>	
+				</ForEach>			
+			</onFixup>
+
+		</Triggers>			
+	</DisplayObjectDefinition>
+</Include>

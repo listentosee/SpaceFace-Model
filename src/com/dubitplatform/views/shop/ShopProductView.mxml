@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:ProductGroupViewBase 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ui="uk.co.dubit.platform.components.catalogue.ui.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.effects.Fade;
+			
+			import uk.co.dubit.platform.components.catalogue.IProductGroup;
+			
+			override public function onProductGroupLoadStarted(productGroup:IProductGroup) : void
+			{
+				viewStack.selectedChild = loadingView;
+			}
+			
+			override public function onProductGroupLoadComplete(productGroup:IProductGroup) : void
+			{
+				viewStack.selectedChild = productGroup.products.length > 0 ? productsView : noProductsView
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Fade id="fadeEffect" />
+		
+	<mx:ViewStack id="viewStack" width="100%" height="100%">
+		
+		<mx:Canvas id="productsView" width="100%" height="100%" showEffect="{ fadeEffect }" hideEffect="{ fadeEffect }">
+			<mx:TileList width="100%" height="100%" 
+						 columnWidth="130" rowHeight="130"
+						 backgroundAlpha="0" borderStyle="none" selectable="false"
+						 itemRenderer="{ new ClassFactory(ShopItemRenderer) }" 
+						 dataProvider="{ productGroup.products }"/>	
+		</mx:Canvas>
+		
+		<mx:Canvas id="loadingView" width="100%" height="100%" showEffect="{ fadeEffect }" hideEffect="{ fadeEffect }">
+			<mx:Label horizontalCenter="0" verticalCenter="0"
+					  text="Loading your products..." />
+		</mx:Canvas>
+		
+		<mx:Canvas id="noProductsView" width="100%" height="100%" showEffect="{ fadeEffect }" hideEffect="{ fadeEffect }">
+			<mx:Label horizontalCenter="0" verticalCenter="0"
+					  text="We're sorry, there are currently no products in this category" />
+		</mx:Canvas>
+		
+	</mx:ViewStack>
+</ui:ProductGroupViewBase>

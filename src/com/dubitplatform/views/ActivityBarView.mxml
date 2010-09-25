@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ActivityBarSkinViewBase
+	xmlns="uk.co.dubit.platform.components.activitybars.ui.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	creationComplete="onCreationComplete()">
+	
+	<mx:Script>
+		<![CDATA[
+			import uk.co.dubit.platform.components.activitybars.IActivityBar;	
+					
+			[Embed(source="/../assets/fonts/Deeko_Comic.ttf", fontFamily="Deeko")]
+			private var deeko:String;		
+					
+			private function onCreationComplete() : void
+			{				
+				bar.filters = [new GlowFilter(000000,1,4,4,10,1), new DropShadowFilter(0, 45, 0x000000, 0.7, 5, 5, 1, 2)];
+			}
+			
+			override public function set activityBar(value:IActivityBar) : void
+			{
+				super.activityBar = value;
+				
+				if(activityBar) updateBar();
+			}
+			
+			override public function onActivityUpdate(activity:IActivityBar) : void
+			{
+				updateBar();
+			}
+			
+			private function updateBar () : void
+			{
+				bar.minimum = 0;
+				bar.maximum = activityBar.duration;
+				bar.setProgress(activityBar.progress, activityBar.duration);
+				bar.label = activityBar.name;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:ProgressBar id="bar" mode="manual" width="150" fontWeight="normal" fontFamily="Deeko" labelPlacement="center"/> 
+</ActivityBarSkinViewBase>

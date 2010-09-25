@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:AbstractQuickChatMenu 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ui="uk.co.dubit.platform.components.chat.quickChat.ui.*" 
+	backgroundAlpha="0.5" backgroundColor="#222222" height="100%" width="100%"
+	
+>
+<!--	mouseDown="{ startDrag() }" mouseUp="{ stopDrag() }" -->
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.Canvas;
+			import mx.controls.Alert;
+			import mx.controls.List;
+			import mx.core.UIComponent;
+			import mx.effects.Fade;
+			import mx.events.ListEvent;
+			
+			import uk.co.dubit.platform.components.chat.quickChat.IQuickChat;
+			import uk.co.dubit.platform.components.chat.quickChat.IQuickChatWord;
+			import uk.co.dubit.platform.components.chat.quickChat.QuickChats;
+			import uk.co.dubit.platform.components.rooms.RoomState;
+			import uk.co.dubit.platform.scriptEngine.room.Room;
+			import uk.co.dubit.utils.IAttributes;
+
+			override public function set node(value:IAttributes):void
+			{
+				super.node = value;
+			}
+			
+			override protected function get menuContainer():UIComponent
+			{
+				return menusContainer;
+			}
+
+			override protected function buildMenu(word:IQuickChatWord, depth:int):UIComponent
+			{
+//				this.x = 400;
+//				this.y = 500 - this.height;
+				var root:Boolean = depth == 0;
+				
+				var menu:List = new QuickChatWordList();
+				
+//				menu.x = 15;
+//				menu.y = root ? 35 : 15;
+				menu.rowCount = word.children.length;
+				menu.dataProvider = word.children;
+				menu.addEventListener(ListEvent.CHANGE, onItemSelected);
+				menu.height = (word.children.length * menu.rowHeight)
+				menu.mouseChildren = true;
+				
+				var container:Canvas = new Canvas();
+				container.addChild(menu);
+				container.width = 190;
+				container.mouseChildren = true;
+				container.mouseEnabled = true;
+				container.height = (word.children.length * menu.rowHeight) + (root ? 70 : 50);
+				
+				container.setStyle("addedEffect", new Fade());
+				
+				return menu;
+			}
+
+			private function onItemSelected(e:ListEvent) : void
+			{
+				var word:IQuickChatWord = e.itemRenderer.data as IQuickChatWord;
+				
+				if(word) selectWord(word);
+			}
+
+			
+
+		]]>
+	</mx:Script>
+	<mx:Canvas width="100%" height="100%" click="{ quickChat.close() }"/>
+	<mx:HBox id="menusContainer" width="100%" height="100%" horizontalGap="-15" horizontalAlign="left" verticalAlign="bottom" top="0"  />
+<!--	<mx:Button label="Close" click="{ quickChat.close() }" bottom="0" left="0" />-->
+
+</ui:AbstractQuickChatMenu>

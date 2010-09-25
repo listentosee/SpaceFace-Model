@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MinigameSkinViewBase 
+	xmlns="uk.co.dubit.platform.components.minigame.ui.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	
+	<mx:Canvas id="container" width="100%" height="100%"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+		
+			override public function getMinigameContainer() : UIComponent
+			{
+				return container;
+			}		
+		]]>
+	</mx:Script>
+	
+</MinigameSkinViewBase>

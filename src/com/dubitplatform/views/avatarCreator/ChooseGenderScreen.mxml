@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:AvatarCreatorSkinViewBase 
+	width="100%" height="100%"
+	show="{ loadAvatars() }"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ui="uk.co.dubit.platform.components.avatarEditor.ui.*" 
+	xmlns:avatarCreator="com.dubitplatform.views.avatarCreator.*" 
+	xmlns:editor="uk.co.dubit.platform.components.avatar.editor.*">
+	
+	<mx:Metadata>
+		[Event(name="backClicked", type="flash.events.Event")]
+		[Event(name="nextClicked", type="flash.events.Event")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[			
+			import mx.effects.Fade;
+			import mx.events.ListEvent;
+			
+			import uk.co.dubit.platform.components.catalogue.IProduct;
+			import uk.co.dubit.platform.components.catalogue.IProductGroup;
+			import uk.co.dubit.platform.data.IAvatar;
+			
+			private function loadAvatars() : void
+			{
+				avatarPreview1.actionID = "stand_front_" + editorsModel.defaultAvatars[0].gender.toLowerCase();
+				avatarPreview1.avatar = editorsModel.defaultAvatars[0];
+				
+				avatarPreview2.actionID = "stand_front_" + editorsModel.defaultAvatars[1].gender.toLowerCase();
+				avatarPreview2.avatar = editorsModel.defaultAvatars[1];
+			}
+			
+			private function avatarSelected (avatar : IAvatar) : void
+			{
+				avatarEditor.avatar = avatar;
+				dispatchEvent(new Event("nextClicked"));
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="100%" height="100%" horizontalAlign="center" paddingTop="20">
+		<mx:HBox horizontalAlign="center" paddingTop="10" width="400">
+			<editor:TintablePose id="avatarPreview1" click="avatarSelected(avatarPreview1.avatar)" width="400" height="600" scaleX="0.40" scaleY="0.40" buttonMode="true" filters="{[new DropShadowFilter(0, 45, 0x000000, 0.7, 5, 5, 1, 2)]}"/>
+			<editor:TintablePose id="avatarPreview2" click="avatarSelected(avatarPreview2.avatar)" width="400" height="600" scaleX="0.40" scaleY="0.40" buttonMode="true" filters="{[new DropShadowFilter(0, 45, 0x000000, 0.7, 5, 5, 1, 2)]}"/>		
+		</mx:HBox>				
+	</mx:VBox>
+
+</ui:AvatarCreatorSkinViewBase>

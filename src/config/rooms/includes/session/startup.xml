@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Channel id="roomChannel" encoding="3" type="mina" endpoint="{Properties.[path.game-server]}">
+		<Triggers>
+			<connectionSuccess>
+				<Trace message="---Connected to the Nexus Game Server---" />
+						
+				<Call behaviourID="joinWorld" />
+			</connectionSuccess>
+
+			<connectionFailed>
+				<Alert title="Connection failed" message="Unable to connect to the Nexus Game Server" />
+			</connectionFailed>
+
+			<connectionLost>
+				<Alert title="Connection lost" message="Connection to the Nexus Game Server has been lost" />
+			</connectionLost>
+
+			<connectionError>
+				<Alert title="Connection failed" message="Unable to connect to the Nexus Game Server" />
+			</connectionError>
+		</Triggers>
+	</Channel>
+
+	<NotificationHandler id="sessionHandler" namespace="session" channel="roomChannel">
+		<Triggers>
+			<acceptRequest>
+				<OnRemoteAcceptNotification notification="{Event.request_id}" />
+			</acceptRequest>
+			
+			<launchMinigame>
+				<JoinMultiplayerMinigame minigame="{Event.game_type}" gameToken="{Event.game_token}" />
+			</launchMinigame>
+
+			<!-- Minigame instance match ready -->
+			<startInstantMatch>
+				<JoinMultiplayerMinigame minigame="{Event.game_type}" gameToken="{Event.game_token}" />
+			</startInstantMatch>
+
+			<acceptRequest>
+				<Switch value="{Event.request_type}">
+					<inviteToRoom>
+					</inviteToRoom>
+				</Switch>
+			</acceptRequest>
+			
+			<handlePoints>
+				<SetValues target="{Rooms.currentRoom.player}" points="({Session.user.currentAvatar.points}+{Event.packet.points_delta})" />
+				<SetValues target="{Session.user.currentAvatar}" points="({Session.user.currentAvatar.points}+{Event.packet.points_delta})" />
+
+				<SetValues target="{Rooms.currentRoom.player}" net_points="{Event.packet.points_balance}" />
+				<SetValues target="{Session.user.currentAvatar}" net_points="{Event.packet.points_balance}" />
+			</handlePoints>
+
+		</Triggers>
+	</NotificationHandler>
+	
+	<BehaviourDefinition id="joinWorld">	
+		<ShowBusyCursor/>
+
+		<LoadClothingLayers>
+			<Result>
+				<If expression="{Session.isLoggedIn}">
+					<Then>			
+						<LoadFirstAvatar>
+							<Result>
+								<EnterSession>
+									<Result>
+										<GetOwnedProducts />
+										<GetAvatarEditorProductGroups />
+										<ChangeRoom roomName="{Properties.[setting.rooms.default-room]}">
+											<onJoinRoomComplete>
+												<HideCustomCursor/>
+											</onJoinRoomComplete>	
+										</ChangeRoom>	
+									</Result>
+									<Fault>
+										<Alert message="Unable to enter session" />
+									</Fault>
+								</EnterSession>
+							</Result>
+							<Fault>
+								<!-- Take action depending on the type of error -->
+								<Switch value="error{Event.httpStatusError.errorID}">
+									<error204>
+										<!-- Unable to load avatar.  Likely that they just don't have an avatar yet.  
+										     Proceed to setup and open an avatar editor which has the ability to create avatars -->					
+										<Call behaviourID="loginOrCreateAvatar" />
+									</error204>
+									<default>
+										<Alert message="Unhandled load first avatar fault" />
+									</default>
+								</Switch>
+							</Fault>
+						</LoadFirstAvatar>
+					</Then>
+					<Else>
+						<Call behaviourID="loginOrCreateAvatar" />
+					</Else>
+				</If>
+			</Result>
+			<Fault>
+				<Alert message="Load clothing layers fault" />
+			</Fault>
+		</LoadClothingLayers>
+		
+	</BehaviourDefinition>
+	
+	<BehaviourDefinition id="loginOrCreateAvatar">
+		<GetDefaultPackages>
+			<Result>
+				<HideCustomCursor/>
+				<OpenAvatarEditor avatarEditor="create" />
+			</Result>
+			<Fault>
+				<Alert message="Unable to load the default packages" />
+			</Fault>
+		</GetDefaultPackages>
+	</BehaviourDefinition>
+
+</Include>

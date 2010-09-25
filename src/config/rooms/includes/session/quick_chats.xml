@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<QuickChats>
+		<QuickChat id="global" skin="com.dubitplatform.views.QuickChatView" targetContainer="quickChatContainer">
+			
+			<Word text="Greetings" includeInPhrase="false"> 
+				<Word text="Good morning"/>
+				<Word text="Good afternoon"/>
+				<Word text="Good evening" />
+				<Word text="Welcome" />
+				<Word text="Nice to meet you" />
+			</Word>
+	
+			<Word text="Farewells" includeInPhrase="false">
+				<Word text="Be right back" />
+				<Word text="Be back soon" />
+				<Word text="I have to go">
+					<Word text="now" />
+					<Word text="soon" />
+					<Word text="later" />
+					<Word text="for dinner" />
+					<Word text="after this game" />
+					<Word text="after this quest" />
+				</Word>
+			</Word>
+			
+			<Triggers>
+				<OnQuickChatWordSelected>
+ 					<ShowPlayerBubble message="{Event.message}" useServer="true" />
+					<CloseQuickChat quickChat="{Event.quickChat}" />
+				</OnQuickChatWordSelected>
+			</Triggers>
+		</QuickChat> 
+	</QuickChats> 
+</Include>

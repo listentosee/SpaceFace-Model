@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dubit:CollectableViewBase xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:dubit="uk.co.dubit.platform.components.backpack.*" xmlns:platform="uk.co.dubit.platform.components.shared.*">
+
+	<mx:VBox width="110" height="110" paddingRight="5" paddingLeft="5" horizontalAlign="center">
+		<mx:Box borderColor="black" borderStyle="solid" paddingBottom="4" paddingTop="5" paddingLeft="5" paddingRight="4">
+			<platform:SmoothImage toolTip="{collectable.name} ({collectable.quantity})" source="{data.previewURL}" width="90" height="80" scaleContent="true" ioError="{event.target.source = data.getValue('assetURL')}"/>	
+		</mx:Box>
+	</mx:VBox>
+	
+</dubit:CollectableViewBase>

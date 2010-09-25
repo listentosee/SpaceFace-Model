@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ChatRoom id="lab" xmlns:xi="http://www.w3.org/2001/XInclude" startX="1667" startY="442">
+
+	<Include href="config/rooms/includes/room_config.xml"/>
+
+	<Collision id="walkableArea" width="2000" height="540" solid="true">
+		<Image id="hitAreaImage" assetID="hit_asset" />
+	</Collision>
+
+	<Filters id="playerFilters">
+		<DepthFilter id="playerDepthFilter" scaleBack="-0.5" scaleFront="0.15"/>
+	</Filters>
+	
+	<Sounds target="{Room.player}" id="sounds">
+		<Sound id="background_music" assetID="background_music_asset" play="true" looping="true"/>
+		<Sound id="pop_effect" assetID="pop_effect_asset" play="false" looping="false"/>
+	</Sounds>
+
+	<Scene id="scene" target="{Room.player}" viewportWidth="850" viewportHeight="400" width="2000" height="540">
+		<DisplayObject2D id="background" assetID="background_asset" mouseEnabled="false"/>
+		<DisplayObject2D id="click" assetID="click_asset" mouseEnabled="true" clickThrough="true" alpha="0"/>
+		<ZSortingDisplayObject id="furniture">
+			<DisplayObject2D id="arch" assetID="arch_asset" x="0" y="408" originX="0" originY="408" mouseEnabled="false"/>
+			<DisplayObject2D id="foliageright" assetID="foliageright_asset" x="0" y="508" originX="0" originY="508" mouseEnabled="false"/>
+			<DisplayObject2D id="posts" assetID="posts_asset" x="0" y="478" originX="0" originY="478" mouseEnabled="false"/>
+			<DisplayObject2D id="hutsdoor1" assetID="hutsdoor1_asset" x="1700" y="374" originX="75" originY="100" mouseEnabled="true" useHandCursor="true" clickThrough="true"/>
+			<DisplayObject2D id="apple" assetID="apple_asset"  x="500" y="510" originX="25" originY="50" mouseEnabled="true" useHandCursor="true" clickThrough="true" verbEnabled="true" filters="{Room.playerFilters}" />
+			<DisplayObject2D id="pear" assetID="pear_asset" x="825" y="480" originX="25" originY="50" mouseEnabled="true" useHandCursor="true" clickThrough="true" verbEnabled="true" filters="{Room.playerFilters}" />
+			<DisplayObject2D id="apricot" assetID="apricot_asset" x="1750" y="525" originX="25" originY="50" mouseEnabled="true" useHandCursor="true" clickThrough="true" verbEnabled="true" filters="{Room.playerFilters}" />
+			<DisplayObject2D id="orange" assetID="orange_asset" x="1275" y="425" originX="25" originY="50" mouseEnabled="true" useHandCursor="true" clickThrough="true" verbEnabled="true" filters="{Room.playerFilters}" />
+			<DisplayObject2D id="lechuck" name="Le Chuck" assetID="lechuck_asset" x="930" y="496" originX="62" originY="184" mouseEnabled="true" verbEnabled="true" clickThrough="true"/>
+		</ZSortingDisplayObject>
+		<DisplayObject2D id="foreground" assetID="foreground_asset" x="0" y="0" originX="0" originY="0" mouseEnabled="false"/>
+		<ZSortingDisplayObject id="playerMessages"/>
+	</Scene>
+	
+	<Assets id="assets">
+		<Asset id="background_music_asset" url="sounds/village/music.mp3"/>		
+		<Asset id="pop_effect_asset" url="sounds/pop.mp3"/>
+        <Asset id="hit_asset" url="images/village/hit.png"/>
+        <Asset id="click_asset" url="images/village/click.png"/>
+        <Asset id="light_filter_asset" url="images/village/light.jpg"/>		
+		<Asset id="background_asset" url="images/village/background.png"/>
+		<Asset id="foreground_asset" url="images/village/foreground.png"/>	
+		<Asset id="foliageright_asset" url="images/village/foliageright.png"/>	
+		<Asset id="posts_asset" url="images/village/posts.png"/>	
+		<Asset id="hutsdoor1_asset" url="images/village/hutsdoor1.png"/>	
+		<Asset id="apple_asset" url="images/village/apple.png"/>
+		<Asset id="pear_asset" url="images/village/pear.png"/>
+		<Asset id="apricot_asset" url="images/village/apricot.png"/>
+		<Asset id="orange_asset" url="images/village/orange.png"/>
+		<Asset id="lechuck_asset" url="images/village/lechuck.png"/>	
+	</Assets>
+	
+	<Trigger gameObject="{Room}" event="OnClick">
+		<PlaySound sound="{Sounds.pop_effect}"/>
+	</Trigger>
+	
+	<Trigger gameObject="{Room}" event="OnMouseOver">
+		<If expression="({Event.origin.verbEnabled}=={true})">
+			<Then>
+				<PlaySound sound="{Sounds.pop_effect}"/>
+			</Then>	
+		</If>	
+	</Trigger>		
+	
+	<Trigger gameObject="{Room.apple}" event="OnPickUp">
+		<MoveTo targetX="{Event.gameObject.x}" targetY="{Event.gameObject.y}">
+			<Complete>
+				<OpenActivityBar activityBar="collecting" targettedGameObject="{Event.gameObject}"/>
+			</Complete>
+		</MoveTo>
+	</Trigger>
+	
+	<Trigger gameObject="{Room.apple}" event="OnLookAt">
+		<ShowBubble message="An apple a day..."/>
+	</Trigger>	
+	
+	<Trigger gameObject="{Room.pear}" event="OnPickUp">
+		<MoveTo targetX="{Event.gameObject.x}" targetY="{Event.gameObject.y}">
+			<Complete>
+				<OpenActivityBar activityBar="collecting" targettedGameObject="{Event.gameObject}"/>
+			</Complete>
+		</MoveTo>
+	</Trigger>
+	
+	<Trigger gameObject="{Room.pear}" event="OnLookAt">
+		<ShowBubble message="Is that a pear for my fruit collection?"/>
+	</Trigger>	
+	
+	<Trigger gameObject="{Room.apricot}" event="OnPickUp">
+		<MoveTo targetX="{Event.gameObject.x}" targetY="{Event.gameObject.y}">
+			<Complete>
+				<OpenActivityBar activityBar="collecting" targettedGameObject="{Event.gameObject}"/>
+			</Complete>	
+		</MoveTo>	
+	</Trigger>
+	
+	<Trigger gameObject="{Room.apricot}" event="OnLookAt">
+		<ShowBubble message="It looks like a juicy apricot to add to my fruit collection"/>
+	</Trigger>	
+	
+	<Trigger gameObject="{Room.orange}" event="OnPickUp">
+		<MoveTo targetX="{Event.gameObject.x}" targetY="{Event.gameObject.y}">
+			<Complete>
+				<OpenActivityBar activityBar="collecting" targettedGameObject="{Event.gameObject}"/>
+			</Complete>
+		</MoveTo>
+	</Trigger>				
+
+	<Trigger gameObject="{Room.orange}" event="OnLookAt">
+		<ShowBubble message="It looks like an orange to add to my fruit collection"/>
+	</Trigger>				
+
+	<Trigger event="OnLookAt" gameObject="{Room.lechuck}">
+		<ShowBubble message="It's LeChuck, an undead pirate captain. Look, he's even got a full beard, large captain hat with feather, sword, and speaks like a pirate!"/>
+	</Trigger>	
+	
+	<Trigger event="OnTalkTo" gameObject="{Room.lechuck}">
+		<MoveTo targetX="({Event.gameObject.x}+{50})" targetY="({Event.gameObject.y}+{30})">
+			<Complete>
+				<BeginDialogue statement="{Room.talkToLeChuck}" npc="{Event.gameObject}"/>
+			</Complete>
+		</MoveTo>
+	</Trigger>
+		
+	<Statement id="talkToLeChuck" message1="Aye, any who be you? And what do you think you be doin' in these parts? Ye'll ne'er get me buried booty!">
+		<Response message="Keep calm, I'm only here to learn about the Dubit Platform">
+			<Statement message="Arrr, good answer landlubber. Before I tell ye about my tails o' swashbucklin, booty, and the Dubit Platform Me need t' fill this great, grand ol' hole in my stomach. Go find me an orange, a pear, an apple, and a apricot, the base in'redients for grog, and I'll tell you all you want t' know. Aye, me parrot concurs.">
+				<Response message="Yes sir, pirate sir!">
+					<BeginQuest quest="{Quests.fruitQuest}" delay="1000"/>
+				</Response>	
+			</Statement>		
+		</Response>
+		<Response message="I don't want your stinking treasure!">
+			<Statement message="Ahoy, they all want my booty, dont kid yourself landlubber. But Me want some grog, go find me an orange, a pear, an apple, and a apricot, the base in'redients for grog. Aye, me parrot concurs.">
+				<Response message="Sounds delicious!">
+					<BeginQuest quest="{Quests.fruitQuest}" delay="1000"/>
+				</Response>	
+			</Statement>		
+		</Response>	
+		<Response message="What is there to do around here?">
+			<Statement message="Ahoy, thar's jobs for me t' do, Captain Le Chuck, no go make your self useful and find me an orange, a pear, an apple, and a apricot, the base in'redients for grog, argh! ">
+				<Response message="Well I do like the sound of grog...">
+					<BeginQuest quest="{Quests.fruitQuest}" delay="1000"/>
+				</Response>	
+			</Statement>		
+		</Response>			
+	</Statement>
+
+</ChatRoom>	
