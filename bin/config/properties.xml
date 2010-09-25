@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<environments current="dev">
+    
+	<environment type="all">
+		<property name="setting.useServer" value="true" />
+		
+		<property name="path.game-server" value="worldhub.dubitplatform.com:1938" />	
+		<property name="path.web-services" value="http://sandbox.dubitplatform.com" />
+		<property name="path.swf-server" value="http://imagebaker.dubitplatform.com" />
+		
+	    <property name="setting.rooms.path" value="config/rooms/"/>
+		<property name="setting.rooms.default-room" value="lab"/>
+		
+		<property name="setting.alert.xOffset" value="0" />
+		<property name="setting.alert.yOffset" value="0" />
+
+		<property name="app.name" value="1"/>
+		
+		<property name="path.create-avatar" value="[path.web-services]/users/{userID}/avatars.nexus"/>
+		<property name="path.first-avatar" value="[path.web-services]/users/{userID}/avatars/first.nexus" />  
+		<property name="path.clothing-modes" value="[path.web-services]/clothing_modes.nexus" />
+		
+		<property name="path.anim-server" value="[path.swf-server]/anim/{asset_group_ids}.zip" />
+		<property name="path.profile.stand_front_male" value="[path.swf-server]/anim/{asset_group_ids}.zip" />
+		<property name="path.profile.stand_front_female" value="[path.swf-server]/anim/{asset_group_ids}.zip" />
+		
+		<!-- Default packages used by an AvatarCreator -->
+		<property name="path.default-packages" value="[path.web-services]/default_packages.nexus" /> 
+		
+		<!-- All available product groups -->
+		<property name="path.product-groups" value="[path.web-services]/product_groups.nexus" />
+		
+		<!-- Products -->
+		<property name="path.avatar" value="[path.web-services]/avatars/{avatarID}.nexus"/> <!-- Used to 'LoadAvatarPoints' -->
+		<property name="path.owned-keys" value="[path.web-services]/avatars/{avatar_id}/avatar_inventories/limited_select.nexus"/>
+		<property name="path.avatar-owned-items" value="[path.web-services]/avatars/{avatarID}/avatar_inventories.nexus"/>
+		<property name="path.avatar-owned-items-by-group" value="[path.web-services]/avatars/{avatarID}/avatar_inventories.nexus?product_group_id={productGroupID}" />	
+		
+		<property name="path.avatar-inventory-worn" value="[path.web-services]/avatars/{avatarID}/avatar_inventories.nexus?worn=1"/>
+		<property name="path.avatar-inventory-worn-update" value="[path.web-services]/avatars/{avatarID}/avatar_inventories/mass_update.nexus"/>
+		<property name="path.avatar-inventory-worn-create" value="[path.web-services]/users/{userID}/avatars.nexus"/>
+		
+		<!-- SHOP -->
+		<property name="path.shop-product-groups" value="[path.web-services]/shops/{shop}/product_groups.nexus?gender={gender}"/>
+		<property name="path.products" value="[path.web-services]/product_groups/{product_group_id}/products.nexus"/>
+		<property name="path.product-image" value="[path.swf-server]/shop/{asset_group_id}/interface.swf" />
+		<property name="path.purchase-product" value="[path.web-services]/avatars/{avatar_id}/avatar_transactions/buy_product.nexus?"/>
+		<property name="path.remove-owned-product" value="[path.web-services]/avatars/{avatar_id}/avatar_transactions/remove_product.nexus" />
+	</environment>
+	
+</environments>

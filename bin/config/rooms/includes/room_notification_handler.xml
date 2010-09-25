@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	
+	<NotificationHandler id="world" namespace="world" channel="roomChannel">
+		
+		<Triggers>
+			
+			<createGameObjects><CreateGameObjects gameObjects="{Event.gameObjects}"/></createGameObjects>
+			<createGameObject><CreateGameObject gameObject="{Event.gameObject}"/></createGameObject>
+			<destroyGameObject><DestroyGameObject gameObject="{Event.gameObject}"/></destroyGameObject>
+
+			
+			<moveToPoint>
+				
+				<MovePlayerTo gameObject="{Event.gameObject}" targetX="{Event.end_x}" targetY="{Event.end_y}" useServer="false"/>
+			</moveToPoint>
+
+			
+			<receiveMessage>
+				<If expression="({Event.gameObject} != {Room.player})">
+					<Then>
+						
+						<ShowChatBubble gameObject="{Event.gameObject}" message="{Event.message}" useServer="false"/>
+					</Then>
+				</If>
+			</receiveMessage>
+
+			
+			<setMemberAttribute>
+				
+				<If expression="({Event.gameObject} != {Room.player})">
+					<Then>
+						<SetValue target="{Event.gameObject}" name="{Event.attributename}" value="{Event.attributevalue}"/>
+					</Then>
+				</If>
+			</setMemberAttribute>
+		</Triggers>
+	</NotificationHandler>
+</Include>

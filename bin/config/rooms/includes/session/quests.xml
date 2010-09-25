@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+
+	<GameObject id="questPersists" cogsReady="false" cog1Ready="false" cog2Ready="false" cog3Ready="false" gramaphoneReady="false" cog3PickedUp="false" persist="true" lensReady="false" lens1Ready="false" lens2Ready="false" lens3Ready="false" pendulumReady="false" pendulum1Ready="false" pendulum2Ready="false" pendulum3Ready="false" pendulum3PickedUp="false"/>
+	
+	<Quest id="timeMachineQuest" name="Inspector" active="false" complete="false" description="The professor has gone missing! We think he's built a time machine but has got stuck in the past! Fix the time machine and search for the professor."> 
+		<Objective name="1) Talk to Karlheinz Fotheringay" id="conversation" complete="false" active="false"/> 
+		<Objective name="2) Fix the fire place" id="fireplace" complete="false" active="false"/> 
+		<Objective name="3) Find the thre lenses for the telescope" id="telescope" complete="false" active="false"/> 
+		<Objective name="4) Repair the grandfather clock with three missing pendulums" id="timemachine" complete="false" active="false"/> 
+		<Triggers>
+			<OnBeginQuest>
+				<Trace message="Quest Begun"/>
+			</OnBeginQuest>
+			<OnCompleteQuest>
+				<Trace message="Quest Complete"/>
+			</OnCompleteQuest>
+			<OnBeginObjective>
+				<Trace message="Objective Begun '{Event.objective.name}'"/>
+			</OnBeginObjective>
+			<OnCompleteObjective>
+			</OnCompleteObjective> 
+		</Triggers>
+	</Quest>	
+	
+	<Quest id="noteQuest" name="Hidden message" active="false" complete="false" description="There may be more to the gramophone than meets the eye...">
+		<Objective name="1) Read the strange note on the floor" id="readnote" complete="false" active="false"/> 
+		<Objective name="2) Listen to the gramophone" id="listengramophone" complete="false" active="false"/> 
+		<Triggers>
+			<OnBeginQuest>
+				<Trace message="Quest Begun"/>
+			</OnBeginQuest>
+			<OnCompleteQuest>
+				<Trace message="Quest Complete"/>
+			</OnCompleteQuest>
+			<OnBeginObjective>
+				<Trace message="Objective Begun '{Event.objective.name}'"/>
+			</OnBeginObjective>
+			<OnCompleteObjective>
+			</OnCompleteObjective> 
+		</Triggers>
+	</Quest>
+	
+	<Quest id="blackboardQuest" name="Hidden message part two" active="false" complete="false" description="Maybe the blackboard will provide further insight in to the hidden message contained in the gramophone">
+		<Objective name="1) Study the blackboard" id="readblackboard" complete="false" active="false"/> 
+		<Triggers>
+			<OnBeginQuest>
+				<Trace message="Quest Begun"/>
+			</OnBeginQuest>
+			<OnCompleteQuest>
+				<Trace message="Quest Complete"/>
+			</OnCompleteQuest>
+			<OnBeginObjective>
+				<Trace message="Objective Begun '{Event.objective.name}'"/>
+			</OnBeginObjective>
+			<OnCompleteObjective>
+			</OnCompleteObjective> 
+		</Triggers>
+	</Quest>
+	
+	<Quest id="fruitQuest" name="Find the fruit for Le Chuck" active="false" complete="false" description="Le Chuck, who some say is the most dangerous pirate ever to infest the Dubit Platform, would like some Grog. Fruit is scattered around the village, find an apple, orange, pear, and apricot to complete the quest. Argh!">
+		<Objective name="Find an orange, pear, apple, and apricot" id="findFruit" complete="false" active="false"/> 
+		<Triggers>
+			<OnBeginQuest>
+				<Trace message="Quest Begun"/>
+				<AwardExperiencePoints points="10"/>
+				<CreateNotification title="You just earned 10XP!" body="You've been given a job by Le Chuck and earned 10XP!" can_remove="true"/>					
+				<ShowAwardXPEffect/>
+			</OnBeginQuest>
+			<OnCompleteQuest>
+				<Trace message="Quest Complete"/>
+				<AwardExperiencePoints points="20"/>
+				<CreateNotification title="You just earned 20XP!" body="Ahoy! You found all the fruit for Le Chuck's grog and earned 20XP!" can_remove="true"/>					
+				<ShowAwardXPEffect/>
+			</OnCompleteQuest>
+			<OnBeginObjective>
+				<Trace message="Objective Begun '{Event.objective.name}'"/>
+			</OnBeginObjective>
+			<OnCompleteObjective>
+			</OnCompleteObjective> 
+		</Triggers>
+	</Quest>	
+</Include>

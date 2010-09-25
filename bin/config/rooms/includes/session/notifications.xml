@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Notifications>
+		<Notification title="Welcome!" body="Check back here to read messages you have received" can_remove="true"/>
+		<Notification title="Free stuff!" body="Hey, since you're new here maybe you'd like this free apple?" can_accept="true" can_reject="true">
+			<Triggers>
+				<onNotificationAccepted>
+					<CreateNotification title="Item accepted" body="You've received an apple! Use it wisely" can_remove="true"/>
+					
+				</onNotificationAccepted>
+			</Triggers>
+		</Notification>		
+		<Triggers>
+			<onNotificationReceived>
+				<If expression="({Event.notification.requestType} == {acceptMinigame})">
+					<Then>
+						<AcceptNotification notification="{Event.notification}">
+							<Result>									
+								<JoinMultiplayerMinigame minigame="{Event.notification.game_type}" gameToken="{Event.notification.game_token}"/>
+							</Result>
+							<Fault>
+								<Alert message="{Event.errorMessage}"/>
+							</Fault>
+						</AcceptNotification>
+					</Then>
+					<Else>
+						<ShowGrowl notification="{Event.notification}" skin="com.dubitplatform.views.GrowlView" targetContainer="growlContainer" duration="6000"/>
+					</Else>
+				</If>
+			</onNotificationReceived>
+			
+			<onNotificationAccepted>
+				<Trace message="Notification accepted"/>
+			</onNotificationAccepted>
+
+			<onNotificationRejected>
+				<Trace message="Notification rejected"/>
+			</onNotificationRejected>
+
+			<onNotificationCancelled>
+				<Trace message="Notification cancelled"/>
+			</onNotificationCancelled>
+
+			<onNotificationRemoved>
+				<Trace message="Notification {Event.notification.requestID} removed"/>
+			</onNotificationRemoved>
+		</Triggers>
+	</Notifications>
+</Include>

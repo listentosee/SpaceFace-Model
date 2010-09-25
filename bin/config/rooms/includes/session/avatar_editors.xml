@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<AvatarEditors>
+		<AvatarEditor id="create" skin="com.dubitplatform.views.AvatarCreatorView" targetContainer="worldOverlay">
+			<Triggers>
+				<onLogin>
+					<Login username="{Event.username}" password="{Event.password}">
+						<Result>
+							<CloseAvatarEditor avatarEditor="create"/>
+							<Call behaviourID="joinWorld"/>
+						</Result>
+						<Fault>
+							<Alert message="Your username/password was incorrect"/>
+						</Fault>
+					</Login>
+				</onLogin>
+				
+				<onRegisterUser>
+					<CreateUser username="{Event.username}" password="{Event.password}">
+						<Result>
+							<CreateAvatar avatar="{AvatarEditors.create.avatar}">
+								<Result>
+									<CloseAvatarEditor avatarEditor="create"/>
+									<Call behaviourID="joinWorld"/>
+								</Result>
+								<Fault>
+								</Fault>
+							</CreateAvatar>
+						</Result>
+						<Fault>
+							<Alert message="Your username may already be taken."/>
+						</Fault>
+					</CreateUser>
+				</onRegisterUser>			
+			</Triggers>
+		</AvatarEditor>
+		
+		<AvatarEditor id="edit" skin="com.dubitplatform.views.AvatarEditorView" targetContainer="worldOverlay">
+			<Triggers>				
+				<onAvatarEditorSave>
+					<UpdateAvatarClothes avatar="{Event.avatarEditor.avatar}">
+					<Result>
+						
+						<DressAvatarWithClothes avatar="{Session.user.currentAvatar}" clothes="{Event.avatarEditor.avatar.clothes}"/>
+						<DressAvatarWithClothes avatar="{Rooms.currentRoom.player}" clothes="{Event.avatarEditor.avatar.clothes}"/>						
+						
+						
+						<TransmitRequest method="SetAvatarLayers" clothing_mode="{Event.avatarEditor.avatar.clothingModeID}" layers="{Event.avatarEditor.avatar.clothes.wornHash}"/>
+						  
+						<CloseAvatarEditor avatarEditor="{Event.avatarEditor}"/>
+					</Result>
+					<Fault>
+						<Alert message="We're sorry, something went wrong and we couldn't change your clothes"/>
+					</Fault>
+				</UpdateAvatarClothes>
+				</onAvatarEditorSave>
+			</Triggers>
+		</AvatarEditor>
+	</AvatarEditors>
+</Include>

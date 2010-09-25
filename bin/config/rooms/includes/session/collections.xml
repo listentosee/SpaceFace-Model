@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Collections>
+		<Collection id="fruitCollection" name="Fruit" description="Looks like the makings of a fruit salad!">
+			<Collectable id="apple" name="Apple" imageURL="images/collections/apple.png" quantity="0"/>
+			<Collectable id="pear" name="Pear" imageURL="images/collections/pear.png" quantity="0"/>
+			<Collectable id="orange" name="Orange" imageURL="images/collections/orange.png" quantity="0"/>
+			<Collectable id="apricot" name="Apricot" imageURL="images/collections/apricot.png" quantity="0"/>
+			<Triggers>
+				<OnCompleteCollection>
+					<CompleteQuest quest="{Quests.fruitQuest}"/>
+				</OnCompleteCollection>				
+			</Triggers>	
+		</Collection>		
+		<Collection id="cdCollection" name="Data Disks" description="Data discs containing sensitive information have been scattered across the room! Collect all the discs to discover a secret!">
+			<Collectable id="cd1" name="Disc 1" imageURL="images/collections/cd.png" quantity="0"/>
+			<Collectable id="cd2" name="Disc 2" imageURL="images/collections/cd.png" quantity="0"/>
+			<Collectable id="cd3" name="Disc 3" imageURL="images/collections/cd.png" quantity="0"/>
+			<Collectable id="cd4" name="Disc 4" imageURL="images/collections/cd.png" quantity="0"/>
+			<Collectable id="cd5" name="Disc 5" imageURL="images/collections/cd.png" quantity="0"/>
+		</Collection> 		
+		<Triggers>
+			<OnFoundCollectable>
+				<Trace message="Found collectable {Event.collection.name} : {Event.collectable.name}"/>
+			</OnFoundCollectable>
+			<OnCompleteCollection>
+				<Trace message="Complete collection {Event.collection.name} : {Event.collectable.name}"/>
+			</OnCompleteCollection>			
+		</Triggers>	
+	</Collections>
+</Include>

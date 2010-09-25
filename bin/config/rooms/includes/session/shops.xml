@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Shops>
+		<Shop id="1" name="Dubit Superstore" skin="com.dubitplatform.views.ShopTitleWindow" targetContainer="worldOverlay">
+			<Triggers>
+				<OnShopOpened>
+					<GetShopProductGroups shop="1" if="({Shops.1.productGroups.length} == {0})"/>
+				</OnShopOpened>
+			</Triggers>
+		</Shop>
+		
+		<Triggers>
+			<OnPurchaseProduct>
+				<PurchaseProduct product="{Event.product}"/>	
+			</OnPurchaseProduct>
+		</Triggers>
+	</Shops>
+</Include>

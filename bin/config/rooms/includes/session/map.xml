@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Map>
+		<Location name="Professor's Lab" roomID="lab" id="labRoom" visible="true" visited="false"/>		
+		<Location name="Library" roomID="lab" id="sdsdada" visible="true" visited="false"/>	
+		<Location name="Drawing Room" roomID="lab" id="dsdsadsdas" visible="true" visited="false"/>		
+		<Location name="Secret Staircase" roomID="lab" id="asdsadasdas" visible="true" visited="false"/>
+		<Location name="Village" roomID="village" id="asdsadasdas" visible="true" visited="false"/>	
+		<Triggers>
+			<OnLocationVisible>
+				<Trace message="Location visible location={Event.location}"/>
+			</OnLocationVisible>
+			<OnLocationVisited>
+				<AwardExperiencePoints points="5"/>
+			</OnLocationVisited>		
+		</Triggers>	
+	</Map>
+</Include>
